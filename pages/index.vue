@@ -1,7 +1,5 @@
 <template>
   <div>
-    <GlobalCard selected="truc" />
-    <GlobalCard selected="machin" />
     <client-only>
       <grid-layout
         :layout.sync="layout"
@@ -22,10 +20,10 @@
           :h="item.h"
           :i="item.i"
           :key="item.i"
+          :isResizable="item.isResizable"
+          :minW="item.minW"
         >
-          <div class="content">
-            test
-          </div>
+          <div class="content"><GlobalCard :selected="item.selected" /></div>
         </grid-item>
       </grid-layout>
     </client-only>
@@ -37,8 +35,18 @@ export default {
   data() {
     return {
       layout: [
-        { x: 0, y: 0, w: 2, h: 2, i: "0" },
-        { x: 2, y: 0, w: 2, h: 4, i: "1" }
+        { x: 0, y: 0, w: 4, h: 4, i: "0", selected: "truc" },
+        { x: 8, y: 0, w: 3, h: 3, i: "1", selected: "clock" },
+        {
+          x: 4,
+          y: 0,
+          w: 4,
+          h: 4,
+          i: "2",
+          selected: "notes",
+          isResizable: true,
+          minW: 2
+        }
       ],
       draggable: true,
       resizable: false,
@@ -73,6 +81,8 @@ export default {
 
 .vue-grid-item .content {
   padding: 20px;
+  font-family: "Quicksand", sans-serif;
+  height: 100%;
 }
 
 .vue-grid-item .text {
@@ -115,4 +125,16 @@ export default {
   box-sizing: border-box;
   cursor: pointer;
 }
+
+/*
+Idées de widgets :
+- Affichage de l'heure
+- La météo (difficile)
+- Todo
+- Embed de site ?
+- Mini jeu ?
+- Lecteur de musique ? (inutile)
+- Galerie d'images ?
+- Bloc note
+*/
 </style>
