@@ -161,16 +161,4 @@ export default {
   box-sizing: border-box;
   cursor: pointer;
 }
-
-/*
-Idées de widgets :
-- Affichage de l'heure
-- La météo (difficile)
-- Todo
-- Embed de site ?
-- Mini jeu ?
-- Lecteur de musique ? (inutile)
-- Galerie d'images ?
-- Bloc note
-*/
 </style>

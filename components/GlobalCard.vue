@@ -13,20 +13,14 @@
         <fa class="icon" icon="code" />
         <h3>Heure de la journée</h3>
       </section>
-      <h1>{{ timestamp }}</h1>
+      <Time />
     </div>
     <div class="card" v-if="selected == 'notes'">
       <section>
         <fa class="icon" icon="star" />
         <h3>Mes notes</h3>
       </section>
-      <textarea
-        placeholder="Ecrivez ce qu'il vous passe par la tête"
-        name=""
-        id=""
-        v-model="message"
-        @input="saveData"
-      ></textarea>
+      <Note />
     </div>
   </div>
 </template>
@@ -36,30 +30,6 @@ export default {
   name: "Card",
   props: {
     selected: String
-  },
-  data() {
-    return {
-      timestamp: new Date().toLocaleTimeString(),
-      message: ""
-    };
-  },
-  mounted() {
-    if (this.selected == "clock") {
-      setInterval(this.getNow, 1000);
-    }
-
-    localStorage.getItem("data")
-      ? (this.message = localStorage.getItem("data"))
-      : (this.message = "");
-  },
-  methods: {
-    getNow() {
-      const today = new Date();
-      this.timestamp = today.toLocaleTimeString();
-    },
-    saveData() {
-      localStorage.setItem("data", this.message);
-    }
   }
 };
 </script>
@@ -95,32 +65,5 @@ section {
 
 .card p {
   margin-top: 5px;
-}
-
-textarea {
-  margin-top: 15px;
-
-  width: 100%;
-  height: 100%;
-  resize: none;
-  outline: none;
-  font-family: "Quicksand", sans-serif;
-  font-size: 16px;
-  border: none;
-}
-
-::-webkit-scrollbar {
-  width: 4px;
-  background: #ffffff;
-  border-left: 1px solid #ffffff;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 1px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgb(50, 50, 50);
-  border-left: 0px solid #ffffff;
 }
 </style>
