@@ -22,6 +22,9 @@
           :key="item.i"
           :isResizable="item.isResizable"
           :minW="item.minW"
+          :minH="item.minH"
+          @resized="saveSize"
+          @moved="savePosition"
         >
           <div class="content"><GlobalCard :selected="item.selected" /></div>
         </grid-item>
@@ -45,14 +48,47 @@ export default {
           i: "2",
           selected: "notes",
           isResizable: true,
-          minW: 2
+          minW: 2,
+          minH: 4
         }
       ],
+      savedLayout: [],
       draggable: true,
       resizable: false,
-      responsive: true,
-      index: 0
+      responsive: true
     };
+  },
+  mounted() {
+    if (localStorage.getItem("layout")) {
+      this.savedLayout = JSON.parse(localStorage.getItem("layout"));
+      for (let i = 0; i < this.savedLayout.length; i++) {
+        this.layout[i].x = this.savedLayout[i].x;
+        this.layout[i].y = this.savedLayout[i].y;
+        this.layout[i].w = this.savedLayout[i].w;
+        this.layout[i].h = this.savedLayout[i].h;
+      }
+    } else {
+      for (let i = 0; i < this.layout.length; i++) {
+        this.savedLayout.push({
+          x: this.layout[i].x,
+          y: this.layout[i].y,
+          w: this.layout[i].w,
+          h: this.layout[i].h
+        });
+      }
+    }
+  },
+  methods: {
+    saveSize(i, newH, newW) {
+      this.savedLayout[i].w = newW;
+      this.savedLayout[i].h = newH;
+      localStorage.setItem("layout", JSON.stringify(this.savedLayout));
+    },
+    savePosition(i, newX, newY) {
+      this.savedLayout[i].x = newX;
+      this.savedLayout[i].y = newY;
+      localStorage.setItem("layout", JSON.stringify(this.savedLayout));
+    }
   }
 };
 </script>

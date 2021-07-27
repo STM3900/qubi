@@ -43,7 +43,7 @@ export default {
       message: ""
     };
   },
-  created() {
+  mounted() {
     if (this.selected == "clock") {
       setInterval(this.getNow, 1000);
     }
