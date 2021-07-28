@@ -2,9 +2,21 @@
   <div>
     <div v-if="timerStatus == 'inactive'" class="inactive">
       <section>
-        <input v-model="timerCountHoursString" type="number" /><span>:</span>
-        <input v-model="timerCountMinutesString" type="number" /><span>:</span>
-        <input v-model="timerCountSecondsString" type="number" />
+        <input
+          v-model="timerCountHoursString"
+          @input="test(0)"
+          type="number"
+        /><span>:</span>
+        <input
+          v-model="timerCountMinutesString"
+          @input="test(1)"
+          type="number"
+        /><span>:</span>
+        <input
+          v-model="timerCountSecondsString"
+          @input="test(2)"
+          type="number"
+        />
       </section>
 
       <button @click="launchTimer">start timer</button>
@@ -99,6 +111,38 @@ export default {
       this.timerCountHours = +this.timerCountHoursString;
       this.timerCountMinutes = +this.timerCountMinutesString;
       this.timerCountSeconds = +this.timerCountSecondsString;
+    },
+    test(index) {
+      switch (index) {
+        case 0:
+          this.timerCountHoursString = this.verificationFormat(
+            this.timerCountHoursString,
+            0
+          );
+          break;
+        case 1:
+          this.timerCountMinutesString = this.verificationFormat(
+            this.timerCountMinutesString,
+            1
+          );
+          break;
+        case 2:
+          this.timerCountSecondsString = this.verificationFormat(
+            this.timerCountSecondsString,
+            2
+          );
+          break;
+      }
+    },
+    verificationFormat(value, index) {
+      if (value.length > 2) {
+        value = value.substr(0, 2);
+      } else if (+value > 59 && index != 0) {
+        value = 59;
+      } else if (+value > 23 && index == 0) {
+        value = 23;
+      }
+      return value;
     }
   }
 };
