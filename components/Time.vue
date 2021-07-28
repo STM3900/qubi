@@ -26,6 +26,9 @@ export default {
 
 <style scoped>
 h1 {
+  font-family: "Roboto Mono", monospace;
   margin: 0;
+  font-weight: normal;
+  font-size: 36px;
 }
 </style>

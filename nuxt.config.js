@@ -47,7 +47,8 @@ export default {
       "@nuxtjs/google-fonts",
       {
         families: {
-          Quicksand: true
+          Quicksand: true,
+          RobotoMono: true
         }
       }
     ]

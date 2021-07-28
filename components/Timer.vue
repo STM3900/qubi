@@ -1,20 +1,28 @@
 <template>
   <div>
-    <div v-if="timerStatus == 'inactive'">
-      <input v-model="timerCountHoursString" type="number" />
-      <input v-model="timerCountMinutesString" type="number" />
-      <input v-model="timerCountSecondsString" type="number" />
+    <div v-if="timerStatus == 'inactive'" class="inactive">
+      <section>
+        <input v-model="timerCountHoursString" type="number" /><span>:</span>
+        <input v-model="timerCountMinutesString" type="number" /><span>:</span>
+        <input v-model="timerCountSecondsString" type="number" />
+      </section>
+
       <button @click="launchTimer">start timer</button>
     </div>
-    <div v-else-if="timerStatus == 'active'">
-      {{ convertToString(timerCountHours) }} :
-      {{ convertToString(timerCountMinutes) }} :
-      {{ convertToString(timerCountSeconds) }}
+    <div v-else-if="timerStatus == 'active'" class="active">
+      <section class="timer">
+        {{ convertToString(timerCountHours) }}:{{
+          convertToString(timerCountMinutes)
+        }}:{{ convertToString(timerCountSeconds) }}
+      </section>
     </div>
-    <div v-else>
-      {{ convertToString(timerCountHours) }} :
-      {{ convertToString(timerCountMinutes) }} :
-      {{ convertToString(timerCountSeconds) }}
+    <div v-else class="finished">
+      <section class="timer">
+        {{ convertToString(timerCountHours) }}:{{
+          convertToString(timerCountMinutes)
+        }}:{{ convertToString(timerCountSeconds) }}
+      </section>
+
       <br />
       terminé
       <button @click="resetTimer">reset</button>
@@ -30,9 +38,9 @@ export default {
       timerCountMinutes: -1,
       timerCountSeconds: -1,
 
-      timerCountHoursString: "",
-      timerCountMinutesString: "",
-      timerCountSecondsString: "",
+      timerCountHoursString: "00",
+      timerCountMinutesString: "00",
+      timerCountSecondsString: "00",
 
       timerStatus: "inactive"
     };
@@ -95,3 +103,53 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* font-family: "Roboto Mono", monospace; */
+
+.inactive section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  font-size: 36px;
+  margin-top: 4px;
+  margin-left: -7px;
+}
+
+.inactive section input {
+  font-family: "Roboto Mono", monospace;
+  font-size: 36px;
+
+  outline: none;
+  width: 50px;
+  border: none;
+  appearance: none;
+  text-align: center;
+}
+
+.timer {
+  margin-top: 5px;
+  font-family: "Roboto Mono", monospace;
+  font-size: 36px;
+}
+
+span {
+  font-family: "Roboto Mono", monospace;
+  font-size: 36px;
+  margin-right: -7.2px;
+  margin-left: -7.2px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+</style>
