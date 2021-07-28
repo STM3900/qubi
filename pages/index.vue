@@ -50,6 +50,14 @@ export default {
           isResizable: true,
           minW: 2,
           minH: 4
+        },
+        {
+          x: 8,
+          y: 0,
+          w: 3,
+          h: 3,
+          i: "3",
+          selected: "jourbon"
         }
       ],
       savedLayout: [],

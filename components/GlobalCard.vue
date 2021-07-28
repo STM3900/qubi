@@ -22,6 +22,13 @@
       </section>
       <Note />
     </div>
+    <div class="card" v-if="selected == 'jourbon'">
+      <section>
+        <fa class="icon" icon="random" style="color: #ef476f;" />
+        <h3>Jourbon</h3>
+      </section>
+      <Jourbon />
+    </div>
   </div>
 </template>
 

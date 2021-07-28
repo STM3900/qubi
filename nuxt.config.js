@@ -32,32 +32,11 @@ export default {
         imports: [
           {
             set: "@fortawesome/free-solid-svg-icons",
-            icons: [
-              "faEnvelope",
-              "faFileAlt",
-              "faAddressBook",
-              "faClipboardList",
-              "faCode",
-              "faUserCircle",
-              "faDatabase",
-              "faStar",
-              "faHome",
-              "faIdCard"
-            ]
+            icons: ["faCode", "faStar", "faHome", "faRedo", "faRandom"]
           },
           {
             set: "@fortawesome/free-brands-svg-icons",
-            icons: [
-              "faLinkedinIn",
-              "faGithub",
-              "faVuejs",
-              "faAngular",
-              "faPhp",
-              "faJsSquare",
-              "faCuttlefish",
-              "faCss3",
-              "faPython"
-            ]
+            icons: []
           },
           { set: "@fortawesome/free-regular-svg-icons", icons: [] }
         ]
