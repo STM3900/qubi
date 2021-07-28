@@ -58,7 +58,8 @@ export default {
           h: 3,
           i: "3",
           selected: "jourbon"
-        }
+        },
+        { x: 8, y: 0, w: 3, h: 3, i: "4", selected: "timer", isResizable: true }
       ],
       savedLayout: [],
       draggable: true,

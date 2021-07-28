@@ -11,7 +11,7 @@
     <div class="card" v-if="selected == 'clock'">
       <section>
         <fa class="icon" icon="code" />
-        <h3>Heure de la journée</h3>
+        <h3>Heure du jour</h3>
       </section>
       <Time />
     </div>
@@ -28,6 +28,13 @@
         <h3>Jourbon</h3>
       </section>
       <Jourbon />
+    </div>
+    <div class="card" v-if="selected == 'timer'">
+      <section>
+        <fa class="icon" icon="star" />
+        <h3>Timer</h3>
+      </section>
+      <Timer />
     </div>
   </div>
 </template>
