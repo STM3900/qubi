@@ -39,6 +39,7 @@ event.keyCode === 46 ? true : !isNaN(Number(event.key))"
           convertToString(timerCountMinutes)
         }}:{{ convertToString(timerCountSeconds) }}
       </section>
+      <button @click="resetTimer">reset</button>
     </div>
     <div v-else class="finished">
       <section class="timer">
