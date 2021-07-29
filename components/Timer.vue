@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="timerStatus == 'inactive'" class="inactive timer-card">
+    <div v-if="!isTimerActive" class="inactive timer-card">
       <section>
         <input
           v-model="timerCountHoursString"
@@ -31,29 +31,29 @@ event.keyCode === 46 ? true : !isNaN(Number(event.key))"
         />
       </section>
       <section>
-        <button @click="launchTimer">start timer</button>
+        <fa @click="launchTimer" class="icon-timer" icon="play" />
       </section>
     </div>
-    <div v-else-if="timerStatus == 'active'" class="active timer-card">
+    <div v-else class="active timer-card">
       <section class="timer">
         {{ convertToString(timerCountHours) }}:{{
           convertToString(timerCountMinutes)
         }}:{{ convertToString(timerCountSeconds) }}
       </section>
       <section>
-        <button v-if="!isPaused" @click="pauseTimer">pause</button>
-        <button v-else @click="resumeTimer">resume</button>
-        <button @click="resetTimer">reset</button>
-      </section>
-    </div>
-    <div v-else class="finished timer-card">
-      <section class="timer">
-        {{ convertToString(timerCountHours) }}:{{
-          convertToString(timerCountMinutes)
-        }}:{{ convertToString(timerCountSeconds) }}
-      </section>
-      <section>
-        <button @click="resetTimer">reset</button>
+        <fa
+          v-if="!isPaused"
+          @click="pauseTimer"
+          class="icon-timer active-icons"
+          icon="pause"
+        />
+        <fa
+          v-else
+          @click="resumeTimer"
+          class="icon-timer active-icons"
+          icon="play"
+        />
+        <fa @click="finishTimer" class="icon-timer active-icons" icon="stop" />
       </section>
     </div>
   </div>
@@ -71,8 +71,9 @@ export default {
       timerCountMinutesString: "00",
       timerCountSecondsString: "00",
 
-      timerStatus: "inactive",
-      isPaused: false
+      isTimerActive: false,
+      isPaused: false,
+      timeout: ""
     };
   },
   watch: {
@@ -107,9 +108,9 @@ export default {
       return value == "" ? "00" : value < 10 ? `0${value}` : value.toString();
     },
     useTimer(value) {
-      if (this.timerStatus == "active" && !this.isPaused) {
+      if (this.isTimerActive && !this.isPaused) {
         if (value >= 0) {
-          setTimeout(() => {
+          this.timeout = setTimeout(() => {
             if (!this.isPaused) {
               this.timerCountSeconds--;
             }
@@ -120,16 +121,20 @@ export default {
       }
     },
     finishTimer() {
-      this.timerStatus = "finished";
-      console.log("timer terminé !");
-    },
-    resetTimer() {
+      this.isTimerActive = false;
+      this.isPaused = false;
+
       this.timerCountHours = -1;
       this.timerCountMinutes = -1;
       this.timerCountSeconds = -1;
-      this.timerStatus = "inactive";
+
+      this.timerCountHoursString = "00";
+      this.timerCountMinutesString = "00";
+      this.timerCountSecondsString = "00";
+      console.log("timer terminé !");
     },
     pauseTimer() {
+      clearTimeout(this.timeout);
       this.isPaused = true;
     },
     resumeTimer() {
@@ -137,7 +142,7 @@ export default {
       this.useTimer(this.timerCountSeconds);
     },
     launchTimer() {
-      this.timerStatus = "active";
+      this.isTimerActive = true;
       this.timerCountHours = +this.timerCountHoursString;
       this.timerCountMinutes = +this.timerCountMinutesString;
       this.timerCountSeconds = +this.timerCountSecondsString;
@@ -206,9 +211,24 @@ export default {
 .timer-card {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   align-content: center;
+  gap: 20px;
+}
+
+.icon-timer {
+  font-size: 18px;
+  margin-top: 3px;
+}
+
+.icon-timer:hover {
+  cursor: pointer;
+}
+
+.active-icons {
+  margin-top: 10px;
+  margin-right: 8px;
 }
 
 .inactive section {

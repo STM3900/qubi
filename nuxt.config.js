@@ -32,7 +32,17 @@ export default {
         imports: [
           {
             set: "@fortawesome/free-solid-svg-icons",
-            icons: ["faCode", "faStar", "faHome", "faRedo", "faRandom"]
+            icons: [
+              "faCode",
+              "faStar",
+              "faHome",
+              "faRedo",
+              "faRandom",
+              "faPlay",
+              "faPause",
+              "faStop",
+              "faStopwatch"
+            ]
           },
           {
             set: "@fortawesome/free-brands-svg-icons",

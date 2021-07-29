@@ -31,7 +31,7 @@
     </div>
     <div class="card" v-if="selected == 'timer'">
       <section>
-        <fa class="icon" icon="star" />
+        <fa class="icon" icon="stopwatch" />
         <h3>Timer</h3>
       </section>
       <Timer />
