@@ -5,17 +5,29 @@
         <input
           v-model="timerCountHoursString"
           @input="test(0)"
+          @click="test(0, true)"
+          @blur="test(0, false, true)"
           type="number"
+          onkeydown="javascript: return event.keyCode === 8 ||
+event.keyCode === 46 ? true : !isNaN(Number(event.key))"
         /><span>:</span>
         <input
           v-model="timerCountMinutesString"
           @input="test(1)"
+          @click="test(1, true)"
+          @blur="test(1, false, true)"
           type="number"
+          onkeydown="javascript: return event.keyCode === 8 ||
+event.keyCode === 46 ? true : !isNaN(Number(event.key))"
         /><span>:</span>
         <input
           v-model="timerCountSecondsString"
           @input="test(2)"
+          @click="test(2, true)"
+          @blur="test(2, false, true)"
           type="number"
+          onkeydown="javascript: return event.keyCode === 8 ||
+event.keyCode === 46 ? true : !isNaN(Number(event.key))"
         />
       </section>
 
@@ -112,25 +124,47 @@ export default {
       this.timerCountMinutes = +this.timerCountMinutesString;
       this.timerCountSeconds = +this.timerCountSecondsString;
     },
-    test(index) {
+    test(index, isClicked = false, isDeFocus = false) {
       switch (index) {
         case 0:
-          this.timerCountHoursString = this.verificationFormat(
-            this.timerCountHoursString,
-            0
-          );
+          !isClicked
+            ? (this.timerCountHoursString = this.verificationFormat(
+                this.timerCountHoursString,
+                0
+              ))
+            : (this.timerCountHoursString = "");
+          if (isDeFocus) {
+            this.timerCountHoursString = this.convertToString(
+              this.timerCountHoursString
+            );
+          }
+
           break;
         case 1:
-          this.timerCountMinutesString = this.verificationFormat(
-            this.timerCountMinutesString,
-            1
-          );
+          !isClicked
+            ? (this.timerCountMinutesString = this.verificationFormat(
+                this.timerCountMinutesString,
+                1
+              ))
+            : (this.timerCountMinutesString = "");
+          if (isDeFocus) {
+            this.timerCountMinutesString = this.convertToString(
+              this.timerCountMinutesString
+            );
+          }
           break;
         case 2:
-          this.timerCountSecondsString = this.verificationFormat(
-            this.timerCountSecondsString,
-            2
-          );
+          !isClicked
+            ? (this.timerCountSecondsString = this.verificationFormat(
+                this.timerCountSecondsString,
+                2
+              ))
+            : (this.timerCountSecondsString = "");
+          if (isDeFocus) {
+            this.timerCountSecondsString = this.convertToString(
+              this.timerCountSecondsString
+            );
+          }
           break;
       }
     },
