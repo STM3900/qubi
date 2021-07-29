@@ -104,7 +104,7 @@ export default {
       }
     },
     convertToString(value) {
-      return value < 10 ? `0${value}` : value.toString();
+      return value == "" ? "00" : value < 10 ? `0${value}` : value.toString();
     },
     useTimer(value) {
       if (this.timerStatus == "active" && !this.isPaused) {
