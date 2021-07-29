@@ -26,7 +26,9 @@
           @resized="saveSize"
           @moved="savePosition"
         >
-          <div class="content"><GlobalCard :selected="item.selected" /></div>
+          <div class="content">
+            <GlobalCard :selected="item.selected" />
+          </div>
         </grid-item>
       </grid-layout>
     </client-only>

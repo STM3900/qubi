@@ -131,6 +131,11 @@ export default {
       this.timerCountHoursString = "00";
       this.timerCountMinutesString = "00";
       this.timerCountSecondsString = "00";
+
+      this.$emit("shakeTimer");
+      setTimeout(() => {
+        this.$emit("shakeTimer");
+      }, 300);
       console.log("timer terminé !");
     },
     pauseTimer() {

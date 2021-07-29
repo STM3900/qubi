@@ -29,12 +29,12 @@
       </section>
       <Jourbon />
     </div>
-    <div class="card" v-if="selected == 'timer'">
+    <div class="card" :class="{ timer: shakeTimer }" v-if="selected == 'timer'">
       <section>
         <fa class="icon" icon="stopwatch" />
         <h3>Timer</h3>
       </section>
-      <Timer />
+      <Timer @shakeTimer="shakeTimer = !shakeTimer" />
     </div>
   </div>
 </template>
@@ -44,6 +44,11 @@ export default {
   name: "Card",
   props: {
     selected: String
+  },
+  data() {
+    return {
+      shakeTimer: false
+    };
   }
 };
 </script>
@@ -79,5 +84,35 @@ section {
 
 .card p {
   margin-top: 5px;
+}
+
+.timer {
+  animation: tremblementerror 0.3s 0s 1;
+}
+
+@keyframes tremblementerror {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(10px);
+  }
+
+  40% {
+    transform: translate(-10px);
+  }
+
+  60% {
+    transform: translate(10px);
+  }
+
+  80% {
+    transform: translate(-10px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
 }
 </style>
