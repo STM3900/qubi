@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="timerStatus == 'inactive'" class="inactive">
+    <div v-if="timerStatus == 'inactive'" class="inactive timer-card">
       <section>
         <input
           v-model="timerCountHoursString"
@@ -30,27 +30,31 @@ event.keyCode === 46 ? true : !isNaN(Number(event.key))"
 event.keyCode === 46 ? true : !isNaN(Number(event.key))"
         />
       </section>
-
-      <button @click="launchTimer">start timer</button>
+      <section>
+        <button @click="launchTimer">start timer</button>
+      </section>
     </div>
-    <div v-else-if="timerStatus == 'active'" class="active">
+    <div v-else-if="timerStatus == 'active'" class="active timer-card">
       <section class="timer">
         {{ convertToString(timerCountHours) }}:{{
           convertToString(timerCountMinutes)
         }}:{{ convertToString(timerCountSeconds) }}
       </section>
-      <button @click="resetTimer">reset</button>
+      <section>
+        <button v-if="!isPaused" @click="pauseTimer">pause</button>
+        <button v-else @click="resumeTimer">resume</button>
+        <button @click="resetTimer">reset</button>
+      </section>
     </div>
-    <div v-else class="finished">
+    <div v-else class="finished timer-card">
       <section class="timer">
         {{ convertToString(timerCountHours) }}:{{
           convertToString(timerCountMinutes)
         }}:{{ convertToString(timerCountSeconds) }}
       </section>
-
-      <br />
-      terminé
-      <button @click="resetTimer">reset</button>
+      <section>
+        <button @click="resetTimer">reset</button>
+      </section>
     </div>
   </div>
 </template>
@@ -67,21 +71,14 @@ export default {
       timerCountMinutesString: "00",
       timerCountSecondsString: "00",
 
-      timerStatus: "inactive"
+      timerStatus: "inactive",
+      isPaused: false
     };
   },
   watch: {
     timerCountSeconds: {
       handler(value) {
-        if (this.timerStatus == "active") {
-          if (value >= 0) {
-            setTimeout(() => {
-              this.timerCountSeconds--;
-            }, 1000);
-          } else {
-            this.checkIfMinutes();
-          }
-        }
+        this.useTimer(value);
       },
       immediate: true // This ensures the watcher is triggered upon creation
     }
@@ -109,6 +106,19 @@ export default {
     convertToString(value) {
       return value < 10 ? `0${value}` : value.toString();
     },
+    useTimer(value) {
+      if (this.timerStatus == "active" && !this.isPaused) {
+        if (value >= 0) {
+          setTimeout(() => {
+            if (!this.isPaused) {
+              this.timerCountSeconds--;
+            }
+          }, 1000);
+        } else {
+          this.checkIfMinutes();
+        }
+      }
+    },
     finishTimer() {
       this.timerStatus = "finished";
       console.log("timer terminé !");
@@ -118,6 +128,13 @@ export default {
       this.timerCountMinutes = -1;
       this.timerCountSeconds = -1;
       this.timerStatus = "inactive";
+    },
+    pauseTimer() {
+      this.isPaused = true;
+    },
+    resumeTimer() {
+      this.isPaused = false;
+      this.useTimer(this.timerCountSeconds);
     },
     launchTimer() {
       this.timerStatus = "active";
@@ -185,6 +202,14 @@ export default {
 
 <style scoped>
 /* font-family: "Roboto Mono", monospace; */
+
+.timer-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
 
 .inactive section {
   display: flex;
