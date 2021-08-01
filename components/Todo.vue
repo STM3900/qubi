@@ -1,26 +1,47 @@
 <template>
   <div class="todo">
     <div v-for="(item, i) in todoList" :key="i" class="todo-list">
-      <input type="checkbox" :id="`checkbox${i}`" v-model="item.finished" />
-      <label
-        v-if="!item.onEdit"
-        :for="`checkbox${i}`"
-        :class="{ finished: item.finished }"
-        >{{ item.label }}</label
-      >
-      <input
-        v-else
-        type="text"
-        @blur="confirmTodo(i)"
-        @keyup.enter="confirmTodo(i)"
-        v-model="item.label"
-      />
-      <button @click="removeTodo(i)">x</button>
-      <button v-if="!item.onEdit" @click="editTodo(i)">e</button>
-      <button v-else @click="confirmTodo(i)">c</button>
+      <section class="todo-list-item">
+        <input type="checkbox" :id="`checkbox${i}`" v-model="item.finished" />
+        <label
+          v-if="!item.onEdit"
+          :for="`checkbox${i}`"
+          :class="{ finished: item.finished }"
+          >{{ item.label }}</label
+        >
+        <textarea
+          v-else
+          type="text"
+          :ref="`textarea${i}`"
+          @blur="confirmTodo(i)"
+          @keyup.enter="confirmTodo(i)"
+          @input="autoGrow(i)"
+          v-model="item.label"
+        ></textarea>
+      </section>
+      <section class="todo-list-button">
+        <fa @click="removeTodo(i)" class="todo-icon" icon="times" />
+        <fa
+          v-if="!item.onEdit"
+          @click="
+            editTodo(i);
+            autoGrow(i);
+          "
+          class="todo-icon"
+          icon="edit"
+        />
+        <fa v-else @click="confirmTodo(i)" class="todo-icon" icon="check" />
+      </section>
     </div>
-    <button @click="addTodo">add</button
-    ><input type="text" v-model="addLabel" @keyup.enter="addTodo" />
+    <div class="add-todo">
+      <fa @click="addTodo" class="todo-icon" icon="plus" />
+      <input
+        type="text"
+        v-model="addLabel"
+        @keyup.enter="addTodo"
+        placeholder="Nouvelle Todo"
+      />
+    </div>
   </div>
 </template>
 
@@ -30,7 +51,8 @@ export default {
   data() {
     return {
       todoList: [],
-      addLabel: ""
+      addLabel: "",
+      cooldownStatus: true
     };
   },
   mounted() {
@@ -39,6 +61,12 @@ export default {
       : (this.todoList = []);
   },
   methods: {
+    setCooldown() {
+      this.cooldownStatus = false;
+      setTimeout(() => {
+        this.cooldownStatus = true;
+      }, 100);
+    },
     removeTodo(index) {
       this.todoList.splice(index, 1);
       this.saveTodos();
@@ -55,14 +83,30 @@ export default {
       }
     },
     editTodo(index) {
-      this.todoList[index].onEdit = true;
+      if (this.cooldownStatus) {
+        this.todoList[index].onEdit = true;
+      }
     },
     confirmTodo(index) {
       this.todoList[index].onEdit = false;
       this.saveTodos();
+      this.setCooldown();
     },
     saveTodos() {
       localStorage.setItem("todoList", JSON.stringify(this.todoList));
+    },
+    /**
+     * Fonction pas très propre, mais bon ça marche
+     */
+    autoGrow(index) {
+      if (this.cooldownStatus) {
+        setTimeout(() => {
+          const ref = this.$refs[`textarea${index}`][0]; // à l'arrache hein
+          ref.style.height = "5px";
+          ref.style.height = ref.scrollHeight + "px";
+          ref.focus();
+        }, 1);
+      }
     }
   }
 };
@@ -71,6 +115,86 @@ export default {
 <style scoped>
 .todo {
   margin-top: 15px;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: center;
+}
+
+.todo-list-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: center;
+
+  overflow-wrap: anywhere;
+  margin-bottom: 10px;
+}
+
+.todo-list-item label:hover {
+  cursor: pointer;
+}
+
+.todo-list-item input[type="checkbox"] {
+  margin-left: 0;
+}
+
+.todo-list-item textarea {
+  width: 100%;
+  font-family: "Quicksand", sans-serif;
+  border: none;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  outline: none;
+
+  resize: none;
+  overflow: hidden;
+  min-height: 0px;
+}
+
+.todo-list-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+  align-content: center;
+}
+
+.todo-list-button .todo-icon {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.todo-icon:hover {
+  cursor: pointer;
+}
+
+.add-todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.add-todo input {
+  width: 100%;
+  margin-left: 5px;
+  border: none;
+  outline: none;
+  font-family: "Quicksand", sans-serif;
+  font-size: 16px;
+}
+
+.add-todo .todo-icon {
+  font-size: 16px;
 }
 
 .finished {

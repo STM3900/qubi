@@ -41,7 +41,13 @@ export default {
               "faPlay",
               "faPause",
               "faStop",
-              "faStopwatch"
+              "faStopwatch",
+              "faCheck",
+              "faTimes",
+              "faEdit",
+              "faPlus",
+              "faCircle",
+              "faCheckCircle"
             ]
           },
           {
