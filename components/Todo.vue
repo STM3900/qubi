@@ -29,30 +29,19 @@ export default {
   name: "Todo",
   data() {
     return {
-      todoList: [
-        {
-          label: "Manger des gnocchi",
-          finished: false,
-          onEdit: false
-        },
-        {
-          label: "Faire les courses",
-          finished: false,
-          onEdit: false
-        },
-        {
-          label: "Recompiler l'univers",
-          finished: false,
-          onEdit: false
-        }
-      ],
+      todoList: [],
       addLabel: ""
     };
   },
-  mounted() {},
+  mounted() {
+    localStorage.getItem("todoList")
+      ? (this.todoList = JSON.parse(localStorage.getItem("todoList")))
+      : (this.todoList = []);
+  },
   methods: {
     removeTodo(index) {
       this.todoList.splice(index, 1);
+      this.saveTodos();
     },
     addTodo() {
       if (this.addLabel) {
@@ -62,6 +51,7 @@ export default {
           onEdit: false
         });
         this.addLabel = "";
+        this.saveTodos();
       }
     },
     editTodo(index) {
@@ -69,6 +59,10 @@ export default {
     },
     confirmTodo(index) {
       this.todoList[index].onEdit = false;
+      this.saveTodos();
+    },
+    saveTodos() {
+      localStorage.setItem("todoList", JSON.stringify(this.todoList));
     }
   }
 };
