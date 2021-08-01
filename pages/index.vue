@@ -40,14 +40,13 @@ export default {
   data() {
     return {
       layout: [
-        { x: 0, y: 0, w: 4, h: 4, i: "0", selected: "truc" },
-        { x: 8, y: 0, w: 3, h: 3, i: "1", selected: "clock" },
+        { x: 8, y: 0, w: 3, h: 3, i: "0", selected: "clock" },
         {
           x: 4,
           y: 0,
           w: 4,
           h: 4,
-          i: "2",
+          i: "1",
           selected: "notes",
           isResizable: true,
           minW: 2,
@@ -58,7 +57,7 @@ export default {
           y: 0,
           w: 3,
           h: 3,
-          i: "3",
+          i: "2",
           selected: "jourbon"
         },
         {
@@ -66,11 +65,10 @@ export default {
           y: 0,
           w: 3,
           h: 3,
-          i: "4",
-          selected: "timer",
-          isResizable: true
+          i: "3",
+          selected: "timer"
         },
-        { x: 8, y: 0, w: 3, h: 3, i: "5", selected: "timer", isResizable: true }
+        { x: 8, y: 0, w: 3, h: 3, i: "4", selected: "todo", isResizable: true }
       ],
       savedLayout: [],
       draggable: true,

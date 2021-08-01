@@ -7,7 +7,6 @@
       </section>
       <p>Description et contenu</p>
     </div>
-
     <div class="card" v-if="selected == 'clock'">
       <section>
         <fa class="icon" icon="code" />
@@ -35,6 +34,13 @@
         <h3>Timer</h3>
       </section>
       <Timer @shakeTimer="shakeTimer = !shakeTimer" />
+    </div>
+    <div class="card" v-if="selected == 'todo'">
+      <section>
+        <fa class="icon" icon="code" />
+        <h3>Ma TodoList</h3>
+      </section>
+      <Todo />
     </div>
   </div>
 </template>

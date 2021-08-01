@@ -225,10 +225,12 @@ export default {
 .icon-timer {
   font-size: 18px;
   margin-top: 3px;
+  transition: 0.3s;
 }
 
 .icon-timer:hover {
   cursor: pointer;
+  transform: rotate(4deg);
 }
 
 .active-icons {
