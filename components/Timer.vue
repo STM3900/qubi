@@ -61,6 +61,7 @@ event.keyCode === 46 ? true : !isNaN(Number(event.key))"
 
 <script>
 export default {
+  name: "Timer",
   data() {
     return {
       timerCountHours: -1,
@@ -216,7 +217,7 @@ export default {
 .timer-card {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
   gap: 20px;

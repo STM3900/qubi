@@ -68,7 +68,16 @@ export default {
           i: "3",
           selected: "timer"
         },
-        { x: 8, y: 0, w: 3, h: 3, i: "4", selected: "todo", isResizable: true }
+        { x: 8, y: 0, w: 3, h: 3, i: "4", selected: "todo", isResizable: true },
+        {
+          x: 8,
+          y: 0,
+          w: 3,
+          h: 3,
+          i: "5",
+          selected: "stopwatch",
+          isResizable: true
+        }
       ],
       savedLayout: [],
       draggable: true,

@@ -42,6 +42,13 @@
       </section>
       <Todo />
     </div>
+    <div class="card" v-if="selected == 'stopwatch'">
+      <section>
+        <fa class="icon" icon="stopwatch" />
+        <h3>Chronomètre</h3>
+      </section>
+      <Stopwatch />
+    </div>
   </div>
 </template>
 
