@@ -31,6 +31,7 @@
           </div>
         </grid-item>
       </grid-layout>
+      <CardMenu />
     </client-only>
   </div>
 </template>
