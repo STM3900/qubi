@@ -115,6 +115,8 @@ export default {
 <style scoped>
 .todo {
   margin-top: 15px;
+  height: 100%;
+  overflow: auto;
 }
 
 .todo-list {
