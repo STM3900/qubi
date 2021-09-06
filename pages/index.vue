@@ -2,7 +2,7 @@
   <div>
     <client-only>
       <grid-layout
-        :layout.sync="layout"
+        :layout.sync="menuLayout"
         :col-num="12"
         :row-height="30"
         :is-draggable="draggable"
@@ -12,7 +12,7 @@
         :use-css-transforms="true"
       >
         <grid-item
-          v-for="item in layout"
+          v-for="item in menuLayout"
           :static="item.static"
           :x="item.x"
           :y="item.y"
@@ -23,15 +23,13 @@
           :isResizable="item.isResizable"
           :minW="item.minW"
           :minH="item.minH"
-          @resized="saveSize"
-          @moved="savePosition"
         >
           <div class="content">
             <GlobalCard :selected="item.selected" />
           </div>
         </grid-item>
       </grid-layout>
-      <CardMenu />
+      <CardMenu @add-card="addCard" @delete-card="deleteCard" />
     </client-only>
   </div>
 </template>
@@ -90,6 +88,8 @@ export default {
         }
       ],
       savedLayout: [],
+      menuLayout: [],
+
       draggable: true,
       resizable: false,
       responsive: true
@@ -125,9 +125,32 @@ export default {
       this.savedLayout[i].x = newX;
       this.savedLayout[i].y = newY;
       localStorage.setItem("layout", JSON.stringify(this.savedLayout));
+    },
+    addCard(card) {
+      card.x = 0;
+      card.y = 0;
+
+      this.menuLayout.push(card);
+      this.updateCardId();
+    },
+    deleteCard(itemSelected) {
+      this.menuLayout = this.menuLayout.filter(
+        obj => obj.selected != itemSelected
+      );
+      this.updateCardId();
+    },
+    updateCardId() {
+      for (let i = 0; i < this.menuLayout.length; i++) {
+        this.menuLayout[i].i = i + 1;
+      }
     }
   }
 };
+
+/* 
+  @resized="saveSize"
+  @moved="savePosition"
+*/
 </script>
 
 <style scoped>

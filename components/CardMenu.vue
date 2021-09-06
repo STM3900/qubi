@@ -11,7 +11,6 @@
         {{ item.name }}
       </li>
     </ul>
-    <p>{{ activeItems }}</p>
   </div>
 </template>
 
@@ -23,7 +22,7 @@ export default {
       cardList: [
         {
           name: "Mes notes",
-          value: "notes",
+          selected: "notes",
           active: true,
 
           isResizable: true,
@@ -35,7 +34,7 @@ export default {
         },
         {
           name: "Heure du jour",
-          value: "clock",
+          selected: "clock",
           active: true,
 
           w: 3,
@@ -43,7 +42,7 @@ export default {
         },
         {
           name: "Jourbon",
-          value: "jourbon",
+          selected: "jourbon",
           active: true,
 
           w: 3,
@@ -51,7 +50,7 @@ export default {
         },
         {
           name: "Timer",
-          value: "timer",
+          selected: "timer",
           active: true,
 
           w: 3,
@@ -59,17 +58,19 @@ export default {
         },
         {
           name: "Ma TodoList",
-          value: "todo",
+          selected: "todo",
           active: true,
 
           isResizable: true,
+          minW: 3,
+          minH: 6,
 
           w: 3,
-          h: 3
+          h: 8
         },
         {
           name: "Chronomètre",
-          value: "stopwatch",
+          selected: "stopwatch",
           active: true,
 
           w: 3,
@@ -81,15 +82,31 @@ export default {
   },
   methods: {
     activateItem(item) {
-      const name = item.name;
-      this.activeItems.push({ name });
+      const selected = item.selected;
+      const w = item.w;
+      const h = item.h;
+
+      const isResizable = item.isResizable;
+      const minW = item.minW;
+      const minH = item.minH;
+
+      const objectCard = {
+        selected,
+        w,
+        h,
+        isResizable,
+        minW,
+        minH
+      };
+
+      this.$emit("add-card", objectCard);
       item.active = false;
     },
     unableItem(item) {
-      const name = item.name;
-      this.activeItems.splice(this.activeItems.indexOf(name), 1);
-      item.active = true;
+      const selected = item.selected;
 
+      this.$emit("delete-card", selected);
+      item.active = true;
       /**
        * let arr = ['A', 'B', 'C'];
        * arr = arr.filter(e => e !== 'B'); // will return ['A', 'C']
@@ -106,6 +123,7 @@ h1 {
 
 li {
   font-family: "Quicksand", sans-serif;
+  transition: 0.2s;
 }
 
 li:hover {
