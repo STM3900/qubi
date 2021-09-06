@@ -2,7 +2,14 @@
   <div>
     <h1>Le menu</h1>
     <ul>
-      <li v-for="(item, i) in cardList" :key="i" :class="{ inactive: !item.active }" @click="item.active ? activateItem(item) : unableItem(item)">{{ item.name }}</li>
+      <li
+        v-for="(item, i) in cardList"
+        :key="i"
+        :class="{ inactive: !item.active }"
+        @click="item.active ? activateItem(item) : unableItem(item)"
+      >
+        {{ item.name }}
+      </li>
     </ul>
     <p>{{ activeItems }}</p>
   </div>
@@ -15,29 +22,59 @@ export default {
     return {
       cardList: [
         {
-            name: "Mes notes",
-            active: true
+          name: "Mes notes",
+          value: "notes",
+          active: true,
+
+          isResizable: true,
+          minW: 2,
+          minH: 4,
+
+          w: 4,
+          h: 4
         },
         {
-            name: "Heure du jour",
-            active: true
+          name: "Heure du jour",
+          value: "clock",
+          active: true,
+
+          w: 3,
+          h: 3
         },
         {
-            name: "Jourbon",
-            active: true
+          name: "Jourbon",
+          value: "jourbon",
+          active: true,
+
+          w: 3,
+          h: 3
         },
         {
-            name: "Timer",
-            active: true
+          name: "Timer",
+          value: "timer",
+          active: true,
+
+          w: 3,
+          h: 3
         },
         {
-            name: "Ma TodoList",
-            active: true
+          name: "Ma TodoList",
+          value: "todo",
+          active: true,
+
+          isResizable: true,
+
+          w: 3,
+          h: 3
         },
         {
-            name: "Chronomètre",
-            active: true
-        },
+          name: "Chronomètre",
+          value: "stopwatch",
+          active: true,
+
+          w: 3,
+          h: 3
+        }
       ],
       activeItems: []
     };
@@ -59,7 +96,7 @@ export default {
        */
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -67,7 +104,7 @@ h1 {
   font-family: "Quicksand", sans-serif;
 }
 
-li{
+li {
   font-family: "Quicksand", sans-serif;
 }
 
