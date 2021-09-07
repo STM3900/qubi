@@ -98,21 +98,7 @@ export default {
   mounted() {
     if (localStorage.getItem("layout")) {
       this.savedLayout = JSON.parse(localStorage.getItem("layout"));
-      for (let i = 0; i < this.savedLayout.length; i++) {
-        this.layout[i].x = this.savedLayout[i].x;
-        this.layout[i].y = this.savedLayout[i].y;
-        this.layout[i].w = this.savedLayout[i].w;
-        this.layout[i].h = this.savedLayout[i].h;
-      }
-    } else {
-      for (let i = 0; i < this.layout.length; i++) {
-        this.savedLayout.push({
-          x: this.layout[i].x,
-          y: this.layout[i].y,
-          w: this.layout[i].w,
-          h: this.layout[i].h
-        });
-      }
+      this.menuLayout = JSON.parse(localStorage.getItem("layout"));
     }
   },
   methods: {
@@ -126,22 +112,33 @@ export default {
       this.savedLayout[i].y = newY;
       localStorage.setItem("layout", JSON.stringify(this.savedLayout));
     },
+    saveCard() {
+      localStorage.setItem("layout", JSON.stringify(this.savedLayout));
+    },
     addCard(card) {
       card.x = 0;
       card.y = 0;
 
       this.menuLayout.push(card);
-      this.updateCardId();
+      this.savedLayout.push(card);
+      this.updateCardId(this.menuLayout);
+      this.updateCardId(this.savedLayout);
+      this.saveCard();
     },
     deleteCard(itemSelected) {
       this.menuLayout = this.menuLayout.filter(
         obj => obj.selected != itemSelected
       );
-      this.updateCardId();
+      this.savedLayout = this.savedLayout.filter(
+        obj => obj.selected != itemSelected
+      );
+      this.updateCardId(this.menuLayout);
+      this.updateCardId(this.savedLayout);
+      this.saveCard();
     },
-    updateCardId() {
-      for (let i = 0; i < this.menuLayout.length; i++) {
-        this.menuLayout[i].i = i + 1;
+    updateCardId(array) {
+      for (let i = 0; i < array.length; i++) {
+        array[i].i = i + 1;
       }
     }
   }

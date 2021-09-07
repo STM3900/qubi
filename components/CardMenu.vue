@@ -80,6 +80,11 @@ export default {
       activeItems: []
     };
   },
+  mounted() {
+    if (localStorage.getItem("layoutMenu")) {
+      this.cardList = JSON.parse(localStorage.getItem("layoutMenu"));
+    }
+  },
   methods: {
     activateItem(item) {
       const selected = item.selected;
@@ -101,16 +106,21 @@ export default {
 
       this.$emit("add-card", objectCard);
       item.active = false;
+      this.saveMenu();
     },
     unableItem(item) {
       const selected = item.selected;
 
       this.$emit("delete-card", selected);
       item.active = true;
+      this.saveMenu();
       /**
        * let arr = ['A', 'B', 'C'];
        * arr = arr.filter(e => e !== 'B'); // will return ['A', 'C']
        */
+    },
+    saveMenu() {
+      localStorage.setItem("layoutMenu", JSON.stringify(this.cardList));
     }
   }
 };
