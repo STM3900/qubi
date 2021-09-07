@@ -12,17 +12,19 @@
         :use-css-transforms="true"
       >
         <grid-item
-          v-for="item in menuLayout"
+          v-for="(item, index) in menuLayout"
           :static="item.static"
           :x="item.x"
           :y="item.y"
           :w="item.w"
           :h="item.h"
           :i="item.i"
-          :key="item.i"
+          :key="index"
           :isResizable="item.isResizable"
           :minW="item.minW"
           :minH="item.minH"
+          @resized="saveCard"
+          @moved="saveCard"
         >
           <div class="content">
             <GlobalCard :selected="item.selected" />
@@ -38,56 +40,6 @@
 export default {
   data() {
     return {
-      layout: [
-        { x: 8, y: 0, w: 3, h: 3, i: "0", selected: "clock" },
-        {
-          x: 4,
-          y: 0,
-          w: 4,
-          h: 4,
-          i: "1",
-          selected: "notes",
-          isResizable: true,
-          minW: 2,
-          minH: 4
-        },
-        {
-          x: 8,
-          y: 0,
-          w: 3,
-          h: 3,
-          i: "2",
-          selected: "jourbon"
-        },
-        {
-          x: 8,
-          y: 0,
-          w: 3,
-          h: 3,
-          i: "3",
-          selected: "timer"
-        },
-        {
-          x: 8,
-          y: 0,
-          w: 3,
-          h: 3,
-          i: "4",
-          selected: "todo",
-          isResizable: true,
-          minW: 2,
-          minH: 5
-        },
-        {
-          x: 8,
-          y: 0,
-          w: 3,
-          h: 3,
-          i: "5",
-          selected: "stopwatch"
-        }
-      ],
-      savedLayout: [],
       menuLayout: [],
 
       draggable: true,
@@ -96,58 +48,34 @@ export default {
     };
   },
   mounted() {
-    if (localStorage.getItem("layout")) {
-      this.savedLayout = JSON.parse(localStorage.getItem("layout"));
-      this.menuLayout = JSON.parse(localStorage.getItem("layout"));
-    }
+    this.menuLayout = JSON.parse(localStorage.getItem("layout")) ?? [];
   },
   methods: {
-    saveSize(i, newH, newW) {
-      this.savedLayout[i].w = newW;
-      this.savedLayout[i].h = newH;
-      localStorage.setItem("layout", JSON.stringify(this.savedLayout));
-    },
-    savePosition(i, newX, newY) {
-      this.savedLayout[i].x = newX;
-      this.savedLayout[i].y = newY;
-      localStorage.setItem("layout", JSON.stringify(this.savedLayout));
-    },
     saveCard() {
-      localStorage.setItem("layout", JSON.stringify(this.savedLayout));
+      localStorage.setItem("layout", JSON.stringify(this.menuLayout));
     },
     addCard(card) {
       card.x = 0;
       card.y = 0;
 
       this.menuLayout.push(card);
-      this.savedLayout.push(card);
-      this.updateCardId(this.menuLayout);
-      this.updateCardId(this.savedLayout);
+      this.updateCardId();
       this.saveCard();
     },
     deleteCard(itemSelected) {
       this.menuLayout = this.menuLayout.filter(
         obj => obj.selected != itemSelected
       );
-      this.savedLayout = this.savedLayout.filter(
-        obj => obj.selected != itemSelected
-      );
-      this.updateCardId(this.menuLayout);
-      this.updateCardId(this.savedLayout);
+      this.updateCardId();
       this.saveCard();
     },
-    updateCardId(array) {
-      for (let i = 0; i < array.length; i++) {
-        array[i].i = i + 1;
+    updateCardId() {
+      for (let i = 0; i < this.menuLayout.length; i++) {
+        this.menuLayout[i].i = i + 1;
       }
     }
   }
 };
-
-/* 
-  @resized="saveSize"
-  @moved="savePosition"
-*/
 </script>
 
 <style scoped>
