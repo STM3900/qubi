@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 .vue-grid-item.vue-grid-placeholder {
   background: green !important;
 }

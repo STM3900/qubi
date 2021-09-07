@@ -25,13 +25,14 @@
           :minH="item.minH"
           @resized="saveCard"
           @moved="saveCard"
+          :class="getClass(item.selected)"
         >
           <div class="content">
             <GlobalCard :selected="item.selected" />
           </div>
         </grid-item>
+        <CardMenu @add-card="addCard" @delete-card="deleteCard" />
       </grid-layout>
-      <CardMenu @add-card="addCard" @delete-card="deleteCard" />
     </client-only>
   </div>
 </template>
@@ -73,6 +74,9 @@ export default {
       for (let i = 0; i < this.menuLayout.length; i++) {
         this.menuLayout[i].i = i + 1;
       }
+    },
+    getClass(item) {
+      return item == "jourbon" ? "hidden" : "";
     }
   }
 };
@@ -89,10 +93,15 @@ export default {
   gap: 15px 25px;
 }
 
+.hidden {
+  /* visibility: hidden; */
+}
+
 /* grid layout */
 
 .vue-grid-layout {
   background: #eee; /* à changer */
+  min-height: 100vh;
 }
 
 .vue-grid-item:not(.vue-grid-placeholder) {

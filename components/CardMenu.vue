@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <h1>Le menu</h1>
-    <ul>
-      <li
-        v-for="(item, i) in cardList"
-        :key="i"
-        :class="{ inactive: !item.active }"
-        @click="item.active ? activateItem(item) : unableItem(item)"
-      >
-        {{ item.name }}
-      </li>
-    </ul>
-  </div>
+  <nav>
+    <p
+      v-for="(item, i) in cardList"
+      :key="i"
+      :class="{ inactive: !item.active }"
+      @click="item.active ? activateItem(item) : unableItem(item)"
+    >
+      {{ item.name }}
+    </p>
+  </nav>
 </template>
 
 <script>
@@ -22,6 +19,7 @@ export default {
       cardList: [
         {
           name: "Mes notes",
+          icon: "",
           selected: "notes",
           active: true,
 
@@ -34,6 +32,7 @@ export default {
         },
         {
           name: "Heure du jour",
+          icon: "",
           selected: "clock",
           active: true,
 
@@ -42,6 +41,7 @@ export default {
         },
         {
           name: "Jourbon",
+          icon: "",
           selected: "jourbon",
           active: true,
 
@@ -50,6 +50,7 @@ export default {
         },
         {
           name: "Timer",
+          icon: "",
           selected: "timer",
           active: true,
 
@@ -58,6 +59,7 @@ export default {
         },
         {
           name: "Ma TodoList",
+          icon: "",
           selected: "todo",
           active: true,
 
@@ -70,6 +72,7 @@ export default {
         },
         {
           name: "Chronomètre",
+          icon: "",
           selected: "stopwatch",
           active: true,
 
@@ -127,16 +130,26 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-family: "Quicksand", sans-serif;
+nav {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
 }
 
-li {
+ul {
+  margin-top: 0;
+}
+
+p {
   font-family: "Quicksand", sans-serif;
   transition: 0.2s;
 }
 
-li:hover {
+p:hover {
   cursor: pointer;
 }
 
