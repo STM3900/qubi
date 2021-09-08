@@ -56,6 +56,13 @@
       </section>
       <CardMenu @add-card="addCard" @delete-card="deleteCard" />
     </div>
+    <div class="card" v-if="selected == 'background'">
+      <section>
+        <fa class="icon" icon="code" />
+        <h3>Background</h3>
+      </section>
+      <Background />
+    </div>
   </div>
 </template>
 

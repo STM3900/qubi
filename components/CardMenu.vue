@@ -80,6 +80,16 @@ export default {
 
           w: 3,
           h: 3
+        },
+        {
+          name: "Background",
+          icon: "code",
+          selected: "background",
+          active: true,
+          static: false,
+
+          w: 3,
+          h: 5
         }
       ],
       activeItems: []

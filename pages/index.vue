@@ -2,6 +2,10 @@
   <div>
     <client-only>
       <grid-layout
+        :style="{
+          backgroundColor: $store.state.backgroundColor,
+          backgroundImage: `url(${this.$store.state.backgroundImage})`
+        }"
         :layout.sync="menuLayout"
         :col-num="12"
         :row-height="30"
@@ -70,7 +74,7 @@ export default {
       this.menuLayout.push({
         selected: "menu",
         w: 2,
-        h: 8,
+        h: 9,
         x: 0,
         y: 0
       });
@@ -183,6 +187,10 @@ export default {
   background: #eee; /* à changer */
   min-height: 100vh;
   overflow: hidden;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .vue-grid-item:not(.vue-grid-placeholder) {
