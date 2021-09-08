@@ -47,7 +47,11 @@ export default {
               "faEdit",
               "faPlus",
               "faCircle",
-              "faCheckCircle"
+              "faCheckCircle",
+              "faListUl",
+              "faClock",
+              "faStickyNote",
+              "faHourglass"
             ]
           },
           {

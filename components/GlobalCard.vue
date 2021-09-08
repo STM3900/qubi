@@ -9,14 +9,14 @@
     </div>
     <div class="card" v-if="selected == 'clock'">
       <section>
-        <fa class="icon" icon="code" />
+        <fa class="icon" icon="clock" />
         <h3>Heure du jour</h3>
       </section>
       <Time />
     </div>
     <div class="card" v-if="selected == 'notes'">
       <section>
-        <fa class="icon" icon="star" />
+        <fa class="icon" icon="sticky-note" />
         <h3>Mes notes</h3>
       </section>
       <Note />
@@ -30,14 +30,14 @@
     </div>
     <div class="card" :class="{ timer: shakeTimer }" v-if="selected == 'timer'">
       <section>
-        <fa class="icon" icon="stopwatch" />
+        <fa class="icon" icon="hourglass" />
         <h3>Timer</h3>
       </section>
       <Timer @shakeTimer="shakeTimer = !shakeTimer" />
     </div>
     <div class="card" v-if="selected == 'todo'">
       <section>
-        <fa class="icon" icon="code" />
+        <fa class="icon" icon="list-ul" />
         <h3>Ma TodoList</h3>
       </section>
       <Todo />
@@ -51,6 +51,9 @@
     </div>
     <div class="card" v-if="selected == 'filler'"></div>
     <div class="card" v-if="selected == 'menu'">
+      <section>
+        <h3 class="menu-title">Menu</h3>
+      </section>
       <CardMenu @add-card="addCard" @delete-card="deleteCard" />
     </div>
   </div>
@@ -105,6 +108,10 @@ section {
 .card h3 {
   margin: 0;
   font-size: 22px;
+}
+
+.menu-title {
+  padding: 20px;
 }
 
 .card p {

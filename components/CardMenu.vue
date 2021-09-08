@@ -6,6 +6,7 @@
       :class="{ inactive: !item.active }"
       @click="item.active ? activateItem(item) : unableItem(item)"
     >
+      <fa class="icon-menu" :icon="item.icon" />
       {{ item.name }}
     </p>
   </nav>
@@ -19,7 +20,7 @@ export default {
       cardList: [
         {
           name: "Mes notes",
-          icon: "",
+          icon: "sticky-note",
           selected: "notes",
           active: true,
 
@@ -32,7 +33,7 @@ export default {
         },
         {
           name: "Heure du jour",
-          icon: "",
+          icon: "clock",
           selected: "clock",
           active: true,
 
@@ -41,7 +42,7 @@ export default {
         },
         {
           name: "Jourbon",
-          icon: "",
+          icon: "random",
           selected: "jourbon",
           active: true,
 
@@ -50,7 +51,7 @@ export default {
         },
         {
           name: "Timer",
-          icon: "",
+          icon: "hourglass",
           selected: "timer",
           active: true,
 
@@ -59,7 +60,7 @@ export default {
         },
         {
           name: "Ma TodoList",
-          icon: "",
+          icon: "list-ul",
           selected: "todo",
           active: true,
 
@@ -72,10 +73,10 @@ export default {
         },
         {
           name: "Chronomètre",
-          icon: "",
+          icon: "stopwatch",
           selected: "stopwatch",
           active: true,
-          static: true,
+          static: false,
 
           w: 3,
           h: 3
@@ -139,13 +140,17 @@ nav {
   z-index: 999;
 }
 
-ul {
-  margin-top: 0;
+.icon-menu {
+  margin-right: 5px;
+  color: rgb(150, 150, 150);
 }
 
 p {
   font-family: "Quicksand", sans-serif;
   transition: 0.2s;
+  margin: 0;
+  /* haut | droit | bas | gauche */
+  padding: 10px 20px 10px 20px;
 }
 
 p:hover {
@@ -153,6 +158,7 @@ p:hover {
 }
 
 .inactive {
-  opacity: 0.5;
+  background: rgb(245, 245, 245);
+  color: black;
 }
 </style>

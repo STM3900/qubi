@@ -33,6 +33,7 @@
               :selected="item.selected"
               @add-card-layout="addCardLayout"
               @delete-card-layout="deleteCardLayout"
+              :class="item.selected != 'menu' ? 'card-padding' : ''"
             />
           </div>
         </grid-item>
@@ -56,8 +57,8 @@ export default {
   mounted() {
     this.menuLayout = JSON.parse(localStorage.getItem("layout")) ?? [];
     /*
-    this.deleteCardLayout("filler");
-    this.generateFillers();
+      this.deleteCardLayout("filler");
+      this.generateFillers();
     */
     let isMenu = false;
     for (let i = 0; i < this.menuLayout.length; i++) {
@@ -190,9 +191,12 @@ export default {
 }
 
 .vue-grid-item .content {
-  padding: 20px;
   font-family: "Quicksand", sans-serif;
   height: 100%;
+}
+
+.card-padding {
+  padding: 20px;
 }
 
 .vue-grid-item .text {
