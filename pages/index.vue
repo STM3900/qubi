@@ -21,6 +21,7 @@
           :i="item.i"
           :key="index"
           :isResizable="item.isResizable"
+          :isDraggable="item.isDraggable"
           :minW="item.minW"
           :minH="item.minH"
           @resized="saveCard"
@@ -28,10 +29,13 @@
           :class="getClass(item.selected)"
         >
           <div class="content">
-            <GlobalCard :selected="item.selected" />
+            <GlobalCard
+              :selected="item.selected"
+              @add-card-layout="addCardLayout"
+              @delete-card-layout="deleteCardLayout"
+            />
           </div>
         </grid-item>
-        <CardMenu @add-card="addCard" @delete-card="deleteCard" />
       </grid-layout>
     </client-only>
   </div>
@@ -42,6 +46,7 @@ export default {
   data() {
     return {
       menuLayout: [],
+      fillerTab: [],
 
       draggable: true,
       resizable: false,
@@ -50,12 +55,34 @@ export default {
   },
   mounted() {
     this.menuLayout = JSON.parse(localStorage.getItem("layout")) ?? [];
+    this.deleteCardLayout("filler");
+    this.generateFillers();
+    let isMenu = false;
+    for (let i = 0; i < this.menuLayout.length; i++) {
+      if (this.menuLayout[i].selected == "menu") {
+        isMenu = true;
+      }
+    }
+    if (!isMenu) {
+      this.menuLayout.push({
+        selected: "menu",
+        w: 3,
+        h: 8,
+        x: 0,
+        y: 0
+      });
+    }
+
+    this.menuLayout = this.menuLayout.concat(this.fillerTab);
+    this.updateCardId();
+
+    console.log(this.menuLayout);
   },
   methods: {
     saveCard() {
       localStorage.setItem("layout", JSON.stringify(this.menuLayout));
     },
-    addCard(card) {
+    addCardLayout(card) {
       card.x = 0;
       card.y = 0;
 
@@ -63,7 +90,7 @@ export default {
       this.updateCardId();
       this.saveCard();
     },
-    deleteCard(itemSelected) {
+    deleteCardLayout(itemSelected) {
       this.menuLayout = this.menuLayout.filter(
         obj => obj.selected != itemSelected
       );
@@ -76,7 +103,42 @@ export default {
       }
     },
     getClass(item) {
-      return item == "jourbon" ? "hidden" : "";
+      return item == "filler" ? "hidden" : "";
+    },
+    generateFillers() {
+      let counter = 0;
+      let heightCounter = 0;
+      let pass = true;
+
+      for (let i = 0; i < 32; i++) {
+        for (let j = 0; j < this.menuLayout.length; j++) {
+          if (
+            this.menuLayout[j].x == counter * 3 &&
+            this.menuLayout[j].y == heightCounter
+          ) {
+            pass = false;
+          }
+        }
+        if (pass) {
+          this.fillerTab.push({
+            selected: "filler",
+            w: 3,
+            h: 3,
+            x: 3 * counter,
+            y: heightCounter,
+            isDraggable: false
+          });
+        } else {
+          pass = true;
+        }
+
+        counter++;
+
+        if (counter > 3) {
+          counter = 0;
+          heightCounter += 3;
+        }
+      }
     }
   }
 };
@@ -102,6 +164,7 @@ export default {
 .vue-grid-layout {
   background: #eee; /* à changer */
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .vue-grid-item:not(.vue-grid-placeholder) {

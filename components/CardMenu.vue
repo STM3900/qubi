@@ -132,12 +132,7 @@ export default {
 <style scoped>
 nav {
   background: white;
-  padding: 20px;
-  border-radius: 5px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
+  z-index: 999;
 }
 
 ul {

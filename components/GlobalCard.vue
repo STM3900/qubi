@@ -49,6 +49,10 @@
       </section>
       <Stopwatch />
     </div>
+    <div class="card" v-if="selected == 'filler'"></div>
+    <div class="card" v-if="selected == 'menu'">
+      <CardMenu @add-card="addCard" @delete-card="deleteCard" />
+    </div>
   </div>
 </template>
 
@@ -62,6 +66,14 @@ export default {
     return {
       shakeTimer: false
     };
+  },
+  methods: {
+    addCard(item) {
+      this.$emit("add-card-layout", item);
+    },
+    deleteCard(item) {
+      this.$emit("delete-card-layout", item);
+    }
   }
 };
 </script>
