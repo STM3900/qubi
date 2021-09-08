@@ -55,8 +55,10 @@ export default {
   },
   mounted() {
     this.menuLayout = JSON.parse(localStorage.getItem("layout")) ?? [];
+    /*
     this.deleteCardLayout("filler");
     this.generateFillers();
+    */
     let isMenu = false;
     for (let i = 0; i < this.menuLayout.length; i++) {
       if (this.menuLayout[i].selected == "menu") {
@@ -66,7 +68,7 @@ export default {
     if (!isMenu) {
       this.menuLayout.push({
         selected: "menu",
-        w: 3,
+        w: 2,
         h: 8,
         x: 0,
         y: 0
@@ -75,8 +77,6 @@ export default {
 
     this.menuLayout = this.menuLayout.concat(this.fillerTab);
     this.updateCardId();
-
-    console.log(this.menuLayout);
   },
   methods: {
     saveCard() {
@@ -109,34 +109,51 @@ export default {
       let counter = 0;
       let heightCounter = 0;
       let pass = true;
+      const bannedCoords = [];
+      let counterTab = 0;
 
-      for (let i = 0; i < 32; i++) {
-        for (let j = 0; j < this.menuLayout.length; j++) {
+      let fillerWidth = 1;
+      let fillerHeight = 1;
+
+      for (let i = 0; i < this.menuLayout.length; i++) {
+        for (let j = 0; j < this.menuLayout[i].h; j++) {
+          for (let k = 0; k < this.menuLayout[i].w; k++) {
+            bannedCoords.push({
+              x: this.menuLayout[i].x + k,
+              y: this.menuLayout[i].y + j
+            });
+          }
+        }
+      }
+      console.log(bannedCoords);
+      for (let i = 0; i < 288; i++) {
+        while (counterTab < bannedCoords.length && pass) {
           if (
-            this.menuLayout[j].x == counter * 3 &&
-            this.menuLayout[j].y == heightCounter
+            bannedCoords[counterTab].x == counter &&
+            bannedCoords[counterTab].y == heightCounter
           ) {
             pass = false;
           }
+          counterTab++;
         }
+        counterTab = 0;
         if (pass) {
           this.fillerTab.push({
             selected: "filler",
-            w: 3,
-            h: 3,
-            x: 3 * counter,
+            w: fillerWidth,
+            h: fillerHeight,
+            x: counter,
             y: heightCounter,
             isDraggable: false
           });
         } else {
           pass = true;
         }
-
         counter++;
 
-        if (counter > 3) {
+        if (counter > 11) {
           counter = 0;
-          heightCounter += 3;
+          heightCounter++;
         }
       }
     }

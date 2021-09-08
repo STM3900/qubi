@@ -75,6 +75,7 @@ export default {
           icon: "",
           selected: "stopwatch",
           active: true,
+          static: true,
 
           w: 3,
           h: 3
@@ -95,6 +96,7 @@ export default {
       const h = item.h;
 
       const isResizable = item.isResizable;
+      const isStatic = item.static;
       const minW = item.minW;
       const minH = item.minH;
 
@@ -103,6 +105,7 @@ export default {
         w,
         h,
         isResizable,
+        static: isStatic,
         minW,
         minH
       };
@@ -110,6 +113,7 @@ export default {
       this.$emit("add-card", objectCard);
       item.active = false;
       this.saveMenu();
+      console.log(objectCard);
     },
     unableItem(item) {
       const selected = item.selected;
