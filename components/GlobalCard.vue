@@ -59,7 +59,7 @@
     <div class="card" v-if="selected == 'background'">
       <section>
         <fa class="icon" icon="code" />
-        <h3>Background</h3>
+        <h3>Fond d'écran</h3>
       </section>
       <Background />
     </div>

@@ -25,14 +25,17 @@
           :i="item.i"
           :key="index"
           :isResizable="item.isResizable"
-          :isDraggable="item.isDraggable"
+          :isDraggable="$store.state.cardCanMove"
           :minW="item.minW"
           :minH="item.minH"
           @resized="saveCard"
           @moved="saveCard"
           :class="getClass(item.selected)"
         >
-          <div class="content">
+          <div
+            class="content"
+            @click="$store.commit('updateCardCanMove', true)"
+          >
             <GlobalCard
               :selected="item.selected"
               @add-card-layout="addCardLayout"
@@ -184,13 +187,13 @@ export default {
 /* grid layout */
 
 .vue-grid-layout {
-  background: #eee; /* à changer */
   min-height: 100vh;
   overflow: hidden;
 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  z-index: 10;
 }
 
 .vue-grid-item:not(.vue-grid-placeholder) {

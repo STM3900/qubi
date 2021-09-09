@@ -3,5 +3,5 @@ body {
 }
 
 .vue-grid-item.vue-grid-placeholder {
-  background: green !important;
+  background: rgba(0, 0, 0, 0.3) !important;
 }

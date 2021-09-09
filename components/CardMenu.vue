@@ -82,14 +82,14 @@ export default {
           h: 3
         },
         {
-          name: "Background",
+          name: "Fond d'écran",
           icon: "code",
           selected: "background",
           active: true,
           static: false,
 
           w: 3,
-          h: 5
+          h: 3
         }
       ],
       activeItems: []
@@ -108,6 +108,7 @@ export default {
 
       const isResizable = item.isResizable;
       const isStatic = item.static;
+      const isDraggable = item.isDraggable;
       const minW = item.minW;
       const minH = item.minH;
 
@@ -117,6 +118,7 @@ export default {
         h,
         isResizable,
         static: isStatic,
+        isDraggable,
         minW,
         minH
       };

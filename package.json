@@ -12,6 +12,7 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "core-js": "^3.15.1",
     "nuxt": "^2.15.7",
+    "one-colorpicker": "^1.0.12",
     "vue-grid-layout": "^2.3.12"
   },
   "devDependencies": {

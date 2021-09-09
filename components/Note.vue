@@ -6,6 +6,7 @@
       id=""
       v-model="message"
       @input="saveData"
+      @mousedown="$store.commit('updateCardCanMove', false)"
     ></textarea>
   </div>
 </template>

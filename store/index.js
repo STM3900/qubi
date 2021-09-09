@@ -1,7 +1,8 @@
 export const state = () => ({
-  backgroundColor: "",
+  backgroundColor: "#eee",
   backgroundMode: "color",
-  backgroundImage: ""
+  backgroundImage: "",
+  cardCanMove: true
 });
 
 export const mutations = {
@@ -13,5 +14,11 @@ export const mutations = {
   },
   updateBackgroundImage(state, message) {
     state.backgroundImage = message;
+  },
+  updateCardCanMove(state, message) {
+    state.cardCanMove = message;
+  },
+  deleteBackground(state) {
+    state.backgroundImage = "";
   }
 };

@@ -18,7 +18,10 @@ export default {
   css: ["~/assets/style.css"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: "~/plugins/vue-grid-layout", mode: "client" }],
+  plugins: [
+    { src: "~/plugins/vue-grid-layout", mode: "client" },
+    { src: "~/plugins/one-colorpicker", mode: "client" }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -51,7 +54,8 @@ export default {
               "faListUl",
               "faClock",
               "faStickyNote",
-              "faHourglass"
+              "faHourglass",
+              "faImage"
             ]
           },
           {
