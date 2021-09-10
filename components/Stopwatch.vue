@@ -41,8 +41,8 @@ export default {
   data() {
     return {
       timerCountHours: -1,
-      timerCountMinutes: 58,
-      timerCountSeconds: 50,
+      timerCountMinutes: -1,
+      timerCountSeconds: -1,
 
       isTimerActive: false,
       isPaused: false
