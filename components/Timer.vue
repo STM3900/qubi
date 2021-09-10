@@ -31,7 +31,7 @@ event.keyCode === 46 ? true : !isNaN(Number(event.key))"
         />
       </section>
       <section>
-        <fa @click="launchTimer" class="icon-timer" icon="play" />
+        <fa @click="launchTimer" class="icon-timer play-button" icon="play" />
       </section>
     </div>
     <div v-else class="active timer-card">
@@ -232,6 +232,10 @@ export default {
 .icon-timer:hover {
   cursor: pointer;
   transform: rotate(4deg);
+}
+
+.play-button {
+  margin-right: 5px;
 }
 
 .active-icons {
