@@ -8,6 +8,7 @@
     >
       <fa class="icon-menu" :icon="item.icon" />
       {{ item.name }}
+      {{ item.numberAvailable }}
     </p>
   </nav>
 </template>
@@ -27,6 +28,8 @@ export default {
           isResizable: true,
           minW: 2,
           minH: 4,
+          numberAvailable: 3,
+          numberMax: 3,
 
           w: 4,
           h: 4
@@ -36,6 +39,8 @@ export default {
           icon: "clock",
           selected: "clock",
           active: true,
+          numberAvailable: 1,
+          numberMax: 1,
 
           w: 3,
           h: 3
@@ -45,6 +50,8 @@ export default {
           icon: "random",
           selected: "jourbon",
           active: true,
+          numberAvailable: 1,
+          numberMax: 1,
 
           w: 3,
           h: 3
@@ -54,6 +61,8 @@ export default {
           icon: "hourglass",
           selected: "timer",
           active: true,
+          numberAvailable: 1,
+          numberMax: 1,
 
           w: 3,
           h: 3
@@ -63,6 +72,8 @@ export default {
           icon: "list-ul",
           selected: "todo",
           active: true,
+          numberAvailable: 3,
+          numberMax: 3,
 
           isResizable: true,
           minW: 3,
@@ -77,6 +88,8 @@ export default {
           selected: "stopwatch",
           active: true,
           static: false,
+          numberAvailable: 1,
+          numberMax: 1,
 
           w: 3,
           h: 3
@@ -87,6 +100,8 @@ export default {
           selected: "background",
           active: true,
           static: false,
+          numberAvailable: 1,
+          numberMax: 1,
 
           w: 3,
           h: 3
@@ -102,34 +117,42 @@ export default {
   },
   methods: {
     activateItem(item) {
-      const selected = item.selected;
-      const w = item.w;
-      const h = item.h;
+      if (item.numberAvailable > 0) {
+        item.numberAvailable--;
 
-      const isResizable = item.isResizable;
-      const isStatic = item.static;
-      const isDraggable = item.isDraggable;
-      const minW = item.minW;
-      const minH = item.minH;
+        const selected = item.selected;
+        const w = item.w;
+        const h = item.h;
 
-      const objectCard = {
-        selected,
-        w,
-        h,
-        isResizable,
-        static: isStatic,
-        isDraggable,
-        minW,
-        minH
-      };
+        const isResizable = item.isResizable;
+        const isStatic = item.static;
+        const isDraggable = item.isDraggable;
+        const minW = item.minW;
+        const minH = item.minH;
 
-      this.$emit("add-card", objectCard);
-      item.active = false;
-      this.saveMenu();
-      console.log(objectCard);
+        const objectCard = {
+          selected,
+          w,
+          h,
+          isResizable,
+          static: isStatic,
+          isDraggable,
+          minW,
+          minH
+        };
+
+        this.$emit("add-card", objectCard);
+
+        this.saveMenu();
+        console.log(objectCard);
+      }
+      if (item.numberAvailable == 0) {
+        item.active = false;
+      }
     },
     unableItem(item) {
       const selected = item.selected;
+      item.numberAvailable = item.numberMax;
 
       this.$emit("delete-card", selected);
       item.active = true;
@@ -140,7 +163,7 @@ export default {
        */
     },
     saveMenu() {
-      localStorage.setItem("layoutMenu", JSON.stringify(this.cardList));
+      //! localStorage.setItem("layoutMenu", JSON.stringify(this.cardList));
     }
   }
 };

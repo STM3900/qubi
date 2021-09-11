@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     saveCard() {
-      localStorage.setItem("layout", JSON.stringify(this.menuLayout));
+      // localStorage.setItem("layout", JSON.stringify(this.menuLayout));
     },
     addCardLayout(card) {
       card.x = 0;
@@ -133,7 +133,6 @@ export default {
           }
         }
       }
-      console.log(bannedCoords);
       for (let i = 0; i < 288; i++) {
         while (counterTab < bannedCoords.length && pass) {
           if (
