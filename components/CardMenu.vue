@@ -152,10 +152,16 @@ export default {
     },
     unableItem(item) {
       const selected = item.selected;
-      item.numberAvailable = item.numberMax;
 
       this.$emit("delete-card", selected);
-      item.active = true;
+      if(item.numberAvailable != item.numberMax - 1){
+        item.numberAvailable++;
+      }
+      else{
+        item.active = true;
+        item.numberAvailable++;
+      }
+ 
       this.saveMenu();
       /**
        * let arr = ['A', 'B', 'C'];

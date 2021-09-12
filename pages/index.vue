@@ -99,9 +99,7 @@ export default {
       this.saveCard();
     },
     deleteCardLayout(itemSelected) {
-      this.menuLayout = this.menuLayout.filter(
-        obj => obj.selected != itemSelected
-      );
+      this.menuLayout.splice(this.menuLayout.indexOf(itemSelected), 1);
       this.updateCardId();
       this.saveCard();
     },
