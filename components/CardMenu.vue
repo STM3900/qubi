@@ -106,8 +106,7 @@ export default {
           w: 3,
           h: 3
         }
-      ],
-      activeItems: []
+      ]
     };
   },
   mounted() {
@@ -154,14 +153,13 @@ export default {
       const selected = item.selected;
 
       this.$emit("delete-card", selected);
-      if(item.numberAvailable != item.numberMax - 1){
+      if (item.numberAvailable != item.numberMax - 1) {
         item.numberAvailable++;
-      }
-      else{
+      } else {
         item.active = true;
         item.numberAvailable++;
       }
- 
+
       this.saveMenu();
       /**
        * let arr = ['A', 'B', 'C'];

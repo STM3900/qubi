@@ -63,6 +63,9 @@
       </section>
       <Background />
     </div>
+    <button v-if="selected != 'menu'">
+      delete
+    </button>
   </div>
 </template>
 

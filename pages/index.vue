@@ -77,7 +77,7 @@ export default {
       this.menuLayout.push({
         selected: "menu",
         w: 2,
-        h: 9,
+        h: 10,
         x: 0,
         y: 0
       });
