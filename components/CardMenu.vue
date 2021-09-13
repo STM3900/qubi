@@ -1,7 +1,7 @@
 <template>
   <nav>
     <p
-      v-for="(item, i) in cardList"
+      v-for="(item, i) in $store.state.cardList"
       :key="i"
       :class="{ inactive: !item.active }"
       @click="item.active ? activateItem(item) : unableItem(item)"
@@ -16,110 +16,23 @@
 <script>
 export default {
   name: "CardMenu",
-  data() {
-    return {
-      cardList: [
-        {
-          name: "Mes notes",
-          icon: "sticky-note",
-          selected: "notes",
-          active: true,
 
-          isResizable: true,
-          minW: 2,
-          minH: 4,
-          numberAvailable: 3,
-          numberMax: 3,
-
-          w: 4,
-          h: 4
-        },
-        {
-          name: "Heure du jour",
-          icon: "clock",
-          selected: "clock",
-          active: true,
-          numberAvailable: 1,
-          numberMax: 1,
-
-          w: 3,
-          h: 3
-        },
-        {
-          name: "Jourbon",
-          icon: "random",
-          selected: "jourbon",
-          active: true,
-          numberAvailable: 1,
-          numberMax: 1,
-
-          w: 3,
-          h: 3
-        },
-        {
-          name: "Timer",
-          icon: "hourglass",
-          selected: "timer",
-          active: true,
-          numberAvailable: 1,
-          numberMax: 1,
-
-          w: 3,
-          h: 3
-        },
-        {
-          name: "Ma TodoList",
-          icon: "list-ul",
-          selected: "todo",
-          active: true,
-          numberAvailable: 3,
-          numberMax: 3,
-
-          isResizable: true,
-          minW: 3,
-          minH: 6,
-
-          w: 3,
-          h: 8
-        },
-        {
-          name: "Chronomètre",
-          icon: "stopwatch",
-          selected: "stopwatch",
-          active: true,
-          static: false,
-          numberAvailable: 1,
-          numberMax: 1,
-
-          w: 3,
-          h: 3
-        },
-        {
-          name: "Fond d'écran",
-          icon: "code",
-          selected: "background",
-          active: true,
-          static: false,
-          numberAvailable: 1,
-          numberMax: 1,
-
-          w: 3,
-          h: 3
-        }
-      ]
-    };
-  },
   mounted() {
+    /*
     if (localStorage.getItem("layoutMenu")) {
       this.cardList = JSON.parse(localStorage.getItem("layoutMenu"));
     }
+    */
   },
   methods: {
     activateItem(item) {
+      const selected = item.selected;
       if (item.numberAvailable > 0) {
-        item.numberAvailable--;
+        this.$store.commit("changeValueOfItem", {
+          selected: selected,
+          value: -1
+        });
 
-        const selected = item.selected;
         const w = item.w;
         const h = item.h;
 
@@ -141,12 +54,13 @@ export default {
         };
 
         this.$emit("add-card", objectCard);
-
         this.saveMenu();
-        console.log(objectCard);
       }
       if (item.numberAvailable == 0) {
-        item.active = false;
+        this.$store.commit("toggleItem", {
+          selected: selected,
+          toggleValue: false
+        });
       }
     },
     unableItem(item) {
@@ -154,17 +68,22 @@ export default {
 
       this.$emit("delete-card", selected);
       if (item.numberAvailable != item.numberMax - 1) {
-        item.numberAvailable++;
+        this.$store.commit("changeValueOfItem", {
+          selected: selected,
+          value: 1
+        });
       } else {
-        item.active = true;
-        item.numberAvailable++;
+        this.$store.commit("changeValueOfItem", {
+          selected: selected,
+          value: 1
+        });
+        this.$store.commit("toggleItem", {
+          selected: selected,
+          toggleValue: true
+        });
       }
 
       this.saveMenu();
-      /**
-       * let arr = ['A', 'B', 'C'];
-       * arr = arr.filter(e => e !== 'B'); // will return ['A', 'C']
-       */
     },
     saveMenu() {
       //! localStorage.setItem("layoutMenu", JSON.stringify(this.cardList));

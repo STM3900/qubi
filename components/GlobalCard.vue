@@ -63,7 +63,7 @@
       </section>
       <Background />
     </div>
-    <button v-if="selected != 'menu'">
+    <button v-if="selected != 'menu'" @click="deleteCardButton(selected)">
       delete
     </button>
   </div>
@@ -81,11 +81,35 @@ export default {
     };
   },
   methods: {
-    addCard(item) {
-      this.$emit("add-card-layout", item);
+    addCard(objectCard) {
+      this.$emit("add-card-layout", objectCard);
     },
-    deleteCard(item) {
-      this.$emit("delete-card-layout", item);
+    deleteCard(selected) {
+      this.$emit("delete-card-layout", selected);
+    },
+    deleteCardButton(selected) {
+      this.$emit("delete-card-layout", selected);
+      const indexSelected = this.$store.state.indexOfSelected;
+      const storenumberAvailable = this.$store.state.cardList[indexSelected]
+        .numberAvailable;
+      const storenumberMax = this.$store.state.cardList[indexSelected]
+        .numberMax;
+
+      if (storenumberAvailable != storenumberMax - 1) {
+        this.$store.commit("changeValueOfItem", {
+          selected: selected,
+          value: 1
+        });
+      } else {
+        this.$store.commit("changeValueOfItem", {
+          selected: selected,
+          value: 1
+        });
+        this.$store.commit("toggleItem", {
+          selected: selected,
+          toggleValue: true
+        });
+      }
     }
   }
 };
