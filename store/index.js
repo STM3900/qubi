@@ -92,7 +92,9 @@ export const state = () => ({
       h: 3
     }
   ],
-  indexOfSelected: 0
+  indexOfSelected: 0,
+  notesData: ["", "", ""],
+  todosData: [[], [], []]
 });
 
 export const mutations = {
@@ -120,11 +122,29 @@ export const mutations = {
   },
   changeValueOfItem(state, payload) {
     this.commit("getIndexOfSelected", payload.selected);
-    console.log(payload.value);
     state.cardList[state.indexOfSelected].numberAvailable += payload.value;
   },
   toggleItem(state, payload) {
     this.commit("getIndexOfSelected", payload.selected);
     state.cardList[state.indexOfSelected].active = payload.toggleValue;
+  },
+  updateNotesData(state, payload) {
+    state.notesData[payload.id] = payload.data;
+  },
+  addTodosStore(state, payload) {
+    state.todosData[payload.id].push({
+      label: payload.label,
+      finished: false,
+      onEdit: false
+    });
+  },
+  removeTodoStore(state, payload) {
+    state.todosData[payload.id].splice(payload.index, 1);
+  },
+  toggleTodoStoreEdit(state, payload) {
+    state.todosData[payload.id][payload.index].onEdit = payload.toggleValue;
+  },
+  updateTodosFinished(state, payload) {
+    state.todosData[payload.id][payload.index].finished = payload.value;
   }
 };

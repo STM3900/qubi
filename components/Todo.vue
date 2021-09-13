@@ -1,8 +1,16 @@
 <template>
   <div class="todo">
-    <div v-for="(item, i) in todoList" :key="i" class="todo-list">
+    <div
+      v-for="(item, i) in $store.state.todosData[this.uniqueIdTodos]"
+      :key="i"
+      class="todo-list"
+    >
       <section class="todo-list-item">
-        <input type="checkbox" :id="`checkbox${i}`" v-model="item.finished" />
+        <input
+          type="checkbox"
+          :id="`checkbox${i}`"
+          v-model="todoData[i].finished"
+        />
         <label
           v-if="!item.onEdit"
           :for="`checkbox${i}`"
@@ -48,6 +56,9 @@
 <script>
 export default {
   name: "Todo",
+  props: {
+    uniqueIdTodos: Number
+  },
   data() {
     return {
       todoList: [],
@@ -56,9 +67,25 @@ export default {
     };
   },
   mounted() {
+    /*
     localStorage.getItem("todoList")
       ? (this.todoList = JSON.parse(localStorage.getItem("todoList")))
       : (this.todoList = []);
+    */
+  },
+  computed: {
+    todoData: {
+      get() {
+        return this.$store.state.todosData[this.uniqueIdTodos];
+      },
+      set(value) {
+        this.$store.commit("updateTodosFinished", {
+          id: this.uniqueIdNotes,
+          data: value,
+          index: 0
+        });
+      }
+    }
   },
   methods: {
     setCooldown() {
@@ -68,15 +95,18 @@ export default {
       }, 100);
     },
     removeTodo(index) {
-      this.todoList.splice(index, 1);
+      this.$store.commit("removeTodoStore", {
+        id: this.uniqueIdTodos,
+        index: index
+      });
       this.saveTodos();
     },
     addTodo() {
       if (this.addLabel) {
-        this.todoList.push({
-          label: this.addLabel,
-          finished: false,
-          onEdit: false
+        console.log(this.uniqueIdTodos);
+        this.$store.commit("addTodosStore", {
+          id: this.uniqueIdTodos,
+          label: this.addLabel
         });
         this.addLabel = "";
         this.saveTodos();
@@ -84,16 +114,24 @@ export default {
     },
     editTodo(index) {
       if (this.cooldownStatus) {
-        this.todoList[index].onEdit = true;
+        this.$store.commit("toggleTodoStoreEdit", {
+          id: this.uniqueIdTodos,
+          toggleValue: true,
+          index: index
+        });
       }
     },
     confirmTodo(index) {
-      this.todoList[index].onEdit = false;
+      this.$store.commit("toggleTodoStoreEdit", {
+        id: this.uniqueIdTodos,
+        toggleValue: false,
+        index: index
+      });
       this.saveTodos();
       this.setCooldown();
     },
     saveTodos() {
-      localStorage.setItem("todoList", JSON.stringify(this.todoList));
+      // localStorage.setItem("todoList", JSON.stringify(this.todoList));
     },
     /**
      * Fonction pas très propre, mais bon ça marche

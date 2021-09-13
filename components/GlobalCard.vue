@@ -19,7 +19,7 @@
         <fa class="icon" icon="sticky-note" />
         <h3>Mes notes</h3>
       </section>
-      <Note />
+      <Note :uniqueIdNotes="uniqueIdCardNotes" />
     </div>
     <div class="card" v-if="selected == 'jourbon'">
       <section>
@@ -40,7 +40,7 @@
         <fa class="icon" icon="list-ul" />
         <h3>Ma TodoList</h3>
       </section>
-      <Todo />
+      <Todo :uniqueIdTodos="uniqueIdCardTodos" />
     </div>
     <div class="card" v-if="selected == 'stopwatch'">
       <section>
@@ -73,11 +73,15 @@
 export default {
   name: "Card",
   props: {
-    selected: String
+    selected: String,
+    id: Number,
+    uniqueIdCardNotes: Number,
+    uniqueIdCardTodos: Number
   },
   data() {
     return {
-      shakeTimer: false
+      shakeTimer: false,
+      ntm: ["ntm connard", "ntm l'informatique", "ntm ma vie"]
     };
   },
   methods: {
@@ -88,7 +92,7 @@ export default {
       this.$emit("delete-card-layout", selected);
     },
     deleteCardButton(selected) {
-      this.$emit("delete-card-layout", selected);
+      this.$emit("delete-card-layout-button", this.id);
       const indexSelected = this.$store.state.indexOfSelected;
       const storenumberAvailable = this.$store.state.cardList[indexSelected]
         .numberAvailable;

@@ -14,19 +14,32 @@
 <script>
 export default {
   name: "Note",
-  data() {
-    return {
-      message: ""
-    };
+  props: {
+    uniqueIdNotes: Number
+  },
+  computed: {
+    message: {
+      get() {
+        return this.$store.state.notesData[this.uniqueIdNotes];
+      },
+      set(value) {
+        this.$store.commit("updateNotesData", {
+          id: this.uniqueIdNotes,
+          data: value
+        });
+      }
+    }
   },
   mounted() {
+    /*
     localStorage.getItem("data")
       ? (this.message = localStorage.getItem("data"))
       : (this.message = "");
+    */
   },
   methods: {
     saveData() {
-      localStorage.setItem("data", this.message);
+      //localStorage.setItem("data", this.message);
     }
   }
 };

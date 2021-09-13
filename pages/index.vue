@@ -38,8 +38,12 @@
           >
             <GlobalCard
               :selected="item.selected"
+              :uniqueIdCardNotes="item.uniqueIdNotes"
+              :uniqueIdCardTodos="item.uniqueIdTodos"
+              :id="index"
               @add-card-layout="addCardLayout"
               @delete-card-layout="deleteCardLayout"
+              @delete-card-layout-button="deleteCardLayoutButton"
               :class="item.selected != 'menu' ? 'card-padding' : ''"
             />
           </div>
@@ -53,6 +57,8 @@
 export default {
   data() {
     return {
+      uniqueIdNotes: 0,
+      uniqueIdTodos: 0,
       menuLayout: [],
       fillerTab: [],
 
@@ -93,13 +99,29 @@ export default {
     addCardLayout(card) {
       card.x = 0;
       card.y = 0;
+      if (card.selected == "notes") {
+        card.uniqueIdNotes = this.uniqueIdNotes;
+        console.log("notes ajouté avec l'id " + this.uniqueIdNotes);
+        this.uniqueIdNotes++;
+      } else if (card.selected == "todo") {
+        card.uniqueIdTodos = this.uniqueIdTodos;
+        console.log("todo ajouté avec l'id " + this.uniqueIdTodos);
+        this.uniqueIdTodos++;
+      }
 
       this.menuLayout.push(card);
       this.updateCardId();
       this.saveCard();
+      console.log(this.menuLayout);
     },
     deleteCardLayout(itemSelected) {
       this.menuLayout.splice(this.menuLayout.indexOf(itemSelected), 1);
+      this.updateCardId();
+      this.saveCard();
+    },
+    deleteCardLayoutButton(index) {
+      console.log(index);
+      this.menuLayout.splice(index, 1);
       this.updateCardId();
       this.saveCard();
     },
