@@ -1,7 +1,7 @@
 <template>
   <div class="todo">
     <div
-      v-for="(item, i) in $store.state.todosData[this.uniqueIdTodos]"
+      v-for="(item, i) in $store.state.todosData[uniqueIdTodos]"
       :key="i"
       class="todo-list"
     >
@@ -9,13 +9,14 @@
         <input
           type="checkbox"
           :id="`checkbox${i}`"
-          v-model="todoData[i].finished"
+          v-model="todoListData[i].finished"
+          @click="toggleTodoData(i)"
         />
         <label
           v-if="!item.onEdit"
           :for="`checkbox${i}`"
-          :class="{ finished: item.finished }"
-          >{{ item.label }}</label
+          :class="{ finished: todoListData[i].finished }"
+          >{{ todoListData[i].label }}</label
         >
         <textarea
           v-else
@@ -24,7 +25,7 @@
           @blur="confirmTodo(i)"
           @keyup.enter="confirmTodo(i)"
           @input="autoGrow(i)"
-          v-model="item.label"
+          v-model="todoListData[i].label"
         ></textarea>
       </section>
       <section class="todo-list-button">
@@ -61,29 +62,23 @@ export default {
   },
   data() {
     return {
-      todoList: [],
+      todoListData: [],
       addLabel: "",
       cooldownStatus: true
     };
   },
   mounted() {
-    /*
-    localStorage.getItem("todoList")
-      ? (this.todoList = JSON.parse(localStorage.getItem("todoList")))
-      : (this.todoList = []);
-    */
+    if (localStorage.getItem("todoList")) {
+      this.$store.commit("updateTodoList", {
+        id: this.uniqueIdTodos,
+        value: JSON.parse(localStorage.getItem("todoList"))
+      });
+    }
   },
   computed: {
     todoData: {
       get() {
         return this.$store.state.todosData[this.uniqueIdTodos];
-      },
-      set(value) {
-        this.$store.commit("updateTodosFinished", {
-          id: this.uniqueIdNotes,
-          data: value,
-          index: 0
-        });
       }
     }
   },
@@ -92,19 +87,24 @@ export default {
       this.cooldownStatus = false;
       setTimeout(() => {
         this.cooldownStatus = true;
-      }, 100);
+      }, 200);
     },
     removeTodo(index) {
       this.$store.commit("removeTodoStore", {
         id: this.uniqueIdTodos,
         index: index
       });
+      this.todoListData.splice(index, 1);
       this.saveTodos();
     },
     addTodo() {
       if (this.addLabel) {
         console.log(this.uniqueIdTodos);
         this.$store.commit("addTodosStore", {
+          id: this.uniqueIdTodos,
+          label: this.addLabel
+        });
+        this.todoListData.push({
           id: this.uniqueIdTodos,
           label: this.addLabel
         });
@@ -127,11 +127,21 @@ export default {
         toggleValue: false,
         index: index
       });
+
+      this.$store.commit("updateTotosText", {
+        id: this.uniqueIdTodos,
+        index: index,
+        label: this.todoListData[index].label
+      });
+
       this.saveTodos();
       this.setCooldown();
     },
     saveTodos() {
-      // localStorage.setItem("todoList", JSON.stringify(this.todoList));
+      localStorage.setItem(
+        "todoList",
+        JSON.stringify(this.$store.state.todosData[this.uniqueIdTodos])
+      );
     },
     /**
      * Fonction pas très propre, mais bon ça marche
@@ -145,6 +155,23 @@ export default {
           ref.focus();
         }, 1);
       }
+    },
+    changeTodoValue(key, evt) {
+      this.$store.commit("updateTotosText", {
+        id: this.uniqueIdTodos,
+        index: key,
+        label: evt.data
+      });
+    },
+    chargeTodoListData() {
+      this.todoListData = this.$store.state.todosData[this.uniqueIdTodos];
+    },
+    toggleTodoData(i) {
+      this.$store.commit("toggleTodoActive", {
+        id: this.uniqueIdTodos,
+        index: i,
+        toggleValue: this.todoListData[i].finished
+      });
     }
   }
 };

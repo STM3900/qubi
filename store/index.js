@@ -138,6 +138,9 @@ export const mutations = {
       onEdit: false
     });
   },
+  updateTodoList(state, payload) {
+    state.todosData[payload.id] = payload.value;
+  },
   removeTodoStore(state, payload) {
     state.todosData[payload.id].splice(payload.index, 1);
   },
@@ -146,5 +149,13 @@ export const mutations = {
   },
   updateTodosFinished(state, payload) {
     state.todosData[payload.id][payload.index].finished = payload.value;
+  },
+  updateTotosText(state, payload) {
+    console.log(payload.label);
+    state.todosData[payload.id][payload.index].label = payload.label;
+  },
+  toggleTodoActive(state, payload) {
+    console.log(payload.toggleValue);
+    state.todosData[payload.id][payload.index].active = payload.toggleValue;
   }
 };
