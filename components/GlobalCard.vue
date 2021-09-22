@@ -114,6 +114,11 @@ export default {
           toggleValue: true
         });
       }
+
+      localStorage.setItem(
+        "layoutMenu",
+        JSON.stringify(this.$store.state.cardList)
+      );
     }
   }
 };

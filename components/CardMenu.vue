@@ -18,11 +18,25 @@ export default {
   name: "CardMenu",
 
   mounted() {
-    /*
     if (localStorage.getItem("layoutMenu")) {
-      this.cardList = JSON.parse(localStorage.getItem("layoutMenu"));
+      console.log("Menu détecté");
+
+      this.$store.commit(
+        "setMenuValue",
+        JSON.parse(localStorage.getItem("layoutMenu"))
+      );
+
+      for (let i = 0; i < this.$store.state.cardList.length; i++) {
+        if (this.$store.state.cardList[i].numberAvailable < 1) {
+          this.$store.commit("toggleItem", {
+            selected: this.$store.state.cardList[i].selected,
+            toggleValue: false
+          });
+        }
+      }
+
+      this.saveMenu();
     }
-    */
   },
   methods: {
     activateItem(item) {
@@ -86,7 +100,10 @@ export default {
       this.saveMenu();
     },
     saveMenu() {
-      //! localStorage.setItem("layoutMenu", JSON.stringify(this.cardList));
+      localStorage.setItem(
+        "layoutMenu",
+        JSON.stringify(this.$store.state.cardList)
+      );
     }
   }
 };

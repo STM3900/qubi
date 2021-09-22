@@ -30,16 +30,20 @@ export default {
       }
     }
   },
-  mounted() {
-    /*
-    localStorage.getItem("data")
-      ? (this.message = localStorage.getItem("data"))
-      : (this.message = "");
-    */
+  created() {
+    if (localStorage.getItem(`data${this.uniqueIdNotes}`)) {
+      this.$store.commit("updateNotesData", {
+        id: this.uniqueIdNotes,
+        data: localStorage.getItem(`data${this.uniqueIdNotes}`)
+      });
+    }
   },
   methods: {
     saveData() {
-      //localStorage.setItem("data", this.message);
+      localStorage.setItem(
+        `data${this.uniqueIdNotes}`,
+        this.$store.state.notesData[this.uniqueIdNotes]
+      );
     }
   }
 };

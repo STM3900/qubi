@@ -113,6 +113,9 @@ export const mutations = {
   deleteBackground(state) {
     state.backgroundImage = "";
   },
+  setMenuValue(state, menu) {
+    state.cardList = menu;
+  },
   getIndexOfSelected(state, selected) {
     state.indexOfSelected = state.cardList
       .map(function(o) {
