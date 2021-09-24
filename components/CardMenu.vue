@@ -4,7 +4,7 @@
       v-for="(item, i) in $store.state.cardList"
       :key="i"
       :class="{ inactive: !item.active }"
-      @click="item.active ? activateItem(item) : unableItem(item)"
+      @click="item.active ? activateItem(item) : ''"
     >
       <fa class="icon-menu" :icon="item.icon" />
       {{ item.name }}
