@@ -101,10 +101,17 @@ export default {
       card.x = 0;
       card.y = 0;
       if (card.selected == "notes") {
+        if (this.uniqueIdNotes >= 3) {
+          this.uniqueIdNotes = 0;
+        }
         card.uniqueIdNotes = this.uniqueIdNotes;
         console.log("notes ajouté avec l'id " + this.uniqueIdNotes);
         this.uniqueIdNotes++;
       } else if (card.selected == "todo") {
+        if (this.uniqueIdTodos >= 3) {
+          this.uniqueIdTodos = 0;
+        }
+
         card.uniqueIdTodos = this.uniqueIdTodos;
         console.log("todo ajouté avec l'id " + this.uniqueIdTodos);
         this.uniqueIdTodos++;
@@ -121,7 +128,19 @@ export default {
       this.saveCard();
     },
     deleteCardLayoutButton(index) {
-      console.log(index);
+      console.log(this.menuLayout);
+      const curentUniqueIdNotes = this.menuLayout[index].uniqueIdNotes;
+
+      if (curentUniqueIdNotes != undefined) {
+        console.log("suppr");
+        console.log(curentUniqueIdNotes);
+        localStorage.removeItem(`data${curentUniqueIdNotes}`);
+
+        this.$store.commit("updateNotesData", {
+          id: curentUniqueIdNotes,
+          data: ""
+        });
+      }
       this.menuLayout.splice(index, 1);
       this.updateCardId();
       this.saveCard();
