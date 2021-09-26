@@ -154,11 +154,9 @@ export const mutations = {
     state.todosData[payload.id][payload.index].finished = payload.value;
   },
   updateTotosText(state, payload) {
-    console.log(payload.label);
     state.todosData[payload.id][payload.index].label = payload.label;
   },
   toggleTodoActive(state, payload) {
-    console.log(payload.toggleValue);
     state.todosData[payload.id][payload.index].active = payload.toggleValue;
   }
 };

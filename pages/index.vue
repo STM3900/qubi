@@ -104,7 +104,6 @@ export default {
           this.uniqueIdNotes = 0;
         }
         card.uniqueIdNotes = this.uniqueIdNotes;
-        console.log("notes ajouté avec l'id " + this.uniqueIdNotes);
         this.uniqueIdNotes++;
       } else if (card.selected == "todo") {
         if (this.uniqueIdTodos >= 3) {
@@ -119,7 +118,6 @@ export default {
       this.menuLayout.push(card);
       this.updateCardId();
       this.saveCard();
-      console.log(this.menuLayout);
     },
     deleteCardLayout(itemSelected) {
       this.menuLayout.splice(this.menuLayout.indexOf(itemSelected), 1);
@@ -127,12 +125,9 @@ export default {
       this.saveCard();
     },
     deleteCardLayoutButton(index) {
-      console.log(this.menuLayout);
       const curentUniqueIdNotes = this.menuLayout[index].uniqueIdNotes;
 
       if (curentUniqueIdNotes != undefined) {
-        console.log("suppr");
-        console.log(curentUniqueIdNotes);
         localStorage.removeItem(`data${curentUniqueIdNotes}`);
 
         this.$store.commit("updateNotesData", {

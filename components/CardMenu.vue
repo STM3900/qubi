@@ -19,8 +19,6 @@ export default {
 
   mounted() {
     if (localStorage.getItem("layoutMenu")) {
-      console.log("Menu détecté");
-
       this.$store.commit(
         "setMenuValue",
         JSON.parse(localStorage.getItem("layoutMenu"))

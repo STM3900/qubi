@@ -67,20 +67,16 @@ export default {
       cooldownStatus: true
     };
   },
-  mounted() {
-    if (localStorage.getItem("todoList")) {
+  created() {
+    console.log(this.uniqueIdTodos);
+    if (localStorage.getItem(`todoList${this.uniqueIdTodos}`)) {
       this.$store.commit("updateTodoList", {
         id: this.uniqueIdTodos,
-        value: JSON.parse(localStorage.getItem("todoList"))
+        value: JSON.parse(localStorage.getItem(`todoList${this.uniqueIdTodos}`))
       });
+      this.todoListData = this.$store.state.todosData[this.uniqueIdTodos];
     }
-  },
-  computed: {
-    todoData: {
-      get() {
-        return this.$store.state.todosData[this.uniqueIdTodos];
-      }
-    }
+    console.log(this.$store.state.todosData[this.uniqueIdTodos]);
   },
   methods: {
     setCooldown() {
@@ -99,7 +95,6 @@ export default {
     },
     addTodo() {
       if (this.addLabel) {
-        console.log(this.uniqueIdTodos);
         this.$store.commit("addTodosStore", {
           id: this.uniqueIdTodos,
           label: this.addLabel
@@ -139,7 +134,7 @@ export default {
     },
     saveTodos() {
       localStorage.setItem(
-        "todoList",
+        `todoList${this.uniqueIdTodos}`,
         JSON.stringify(this.$store.state.todosData[this.uniqueIdTodos])
       );
     },
@@ -167,11 +162,14 @@ export default {
       this.todoListData = this.$store.state.todosData[this.uniqueIdTodos];
     },
     toggleTodoData(i) {
+      console.log(!this.todoListData[i].finished);
       this.$store.commit("toggleTodoActive", {
         id: this.uniqueIdTodos,
         index: i,
-        toggleValue: this.todoListData[i].finished
+        toggleValue: !this.todoListData[i].finished
       });
+
+      this.saveTodos();
     }
   }
 };

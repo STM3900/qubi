@@ -96,9 +96,6 @@ export default {
       const storenumberAvailable = this.$store.state.cardList[indexSelected]
         .numberAvailable;
 
-      console.log(this.$store.state.cardList[indexSelected]);
-      console.log(storenumberAvailable);
-
       this.$store.commit("changeValueOfItem", {
         selected: selected,
         value: 1
