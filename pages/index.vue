@@ -49,7 +49,6 @@
           </div>
         </grid-item>
       </grid-layout>
-      <input type="checkbox" name="" @input="test" id="" />
     </client-only>
   </div>
 </template>
@@ -203,9 +202,6 @@ export default {
           heightCounter++;
         }
       }
-    },
-    test() {
-      console.log("slt");
     }
   }
 };

@@ -92,28 +92,23 @@ export default {
       this.$emit("delete-card-layout", selected);
     },
     deleteCardButton(selected) {
-      this.$emit("delete-card-layout-button", this.id);
       const indexSelected = this.$store.state.indexOfSelected;
       const storenumberAvailable = this.$store.state.cardList[indexSelected]
         .numberAvailable;
-      const storenumberMax = this.$store.state.cardList[indexSelected]
-        .numberMax;
 
-      if (storenumberAvailable != storenumberMax - 1) {
-        this.$store.commit("changeValueOfItem", {
-          selected: selected,
-          value: 1
-        });
-      } else {
-        this.$store.commit("changeValueOfItem", {
-          selected: selected,
-          value: 1
-        });
-        this.$store.commit("toggleItem", {
-          selected: selected,
-          toggleValue: true
-        });
-      }
+      console.log(this.$store.state.cardList[indexSelected]);
+      console.log(storenumberAvailable);
+
+      this.$store.commit("changeValueOfItem", {
+        selected: selected,
+        value: 1
+      });
+      this.$store.commit("toggleItem", {
+        selected: selected,
+        toggleValue: true
+      });
+
+      this.$emit("delete-card-layout-button", this.id);
 
       localStorage.setItem(
         "layoutMenu",
