@@ -1,5 +1,6 @@
 <template>
   <div class="todo">
+    <p>{{ uniqueIdTodos }}</p>
     <div
       v-for="(item, i) in $store.state.todosData[uniqueIdTodos]"
       :key="i"
@@ -8,20 +9,20 @@
       <section class="todo-list-item">
         <input
           type="checkbox"
-          :id="`checkbox${i}`"
+          :id="`checkbox${i}${uniqueIdTodos}`"
           v-model="todoListData[i].finished"
           @click="toggleTodoData(i)"
         />
         <label
           v-if="!item.onEdit"
-          :for="`checkbox${i}`"
+          :for="`checkbox${i}${uniqueIdTodos}`"
           :class="{ finished: todoListData[i].finished }"
-          >{{ todoListData[i].label }}</label
+          >{{ item.label }}</label
         >
         <textarea
           v-else
           type="text"
-          :ref="`textarea${i}`"
+          :ref="`textarea${i}${uniqueIdTodos}`"
           @blur="confirmTodo(i)"
           @keyup.enter="confirmTodo(i)"
           @input="autoGrow(i)"
@@ -64,7 +65,8 @@ export default {
     return {
       todoListData: [],
       addLabel: "",
-      cooldownStatus: true
+      cooldownStatus: true,
+      isInStore: false
     };
   },
   created() {
@@ -75,6 +77,7 @@ export default {
         value: JSON.parse(localStorage.getItem(`todoList${this.uniqueIdTodos}`))
       });
       this.todoListData = this.$store.state.todosData[this.uniqueIdTodos];
+      this.isInStore = true;
     }
     console.log(this.$store.state.todosData[this.uniqueIdTodos]);
   },
@@ -99,16 +102,23 @@ export default {
           id: this.uniqueIdTodos,
           label: this.addLabel
         });
-        this.todoListData.push({
-          id: this.uniqueIdTodos,
-          label: this.addLabel
-        });
+        if (!this.isInStore) {
+          this.todoListData.push({
+            id: this.uniqueIdTodos,
+            label: this.addLabel
+          });
+        }
+
         this.addLabel = "";
         this.saveTodos();
       }
     },
     editTodo(index) {
       if (this.cooldownStatus) {
+        this.todoListData[index].label = this.$store.state.todosData[
+          this.uniqueIdTodos
+        ][index].label;
+
         this.$store.commit("toggleTodoStoreEdit", {
           id: this.uniqueIdTodos,
           toggleValue: true,
@@ -162,11 +172,12 @@ export default {
       this.todoListData = this.$store.state.todosData[this.uniqueIdTodos];
     },
     toggleTodoData(i) {
-      console.log(!this.todoListData[i].finished);
-      this.$store.commit("toggleTodoActive", {
+      console.log(i);
+      console.log(this.uniqueIdTodos);
+      this.$store.commit("updateTodosFinished", {
         id: this.uniqueIdTodos,
         index: i,
-        toggleValue: !this.todoListData[i].finished
+        value: !this.todoListData[i].finished
       });
 
       this.saveTodos();

@@ -125,14 +125,24 @@ export default {
       this.saveCard();
     },
     deleteCardLayoutButton(index) {
-      const curentUniqueIdNotes = this.menuLayout[index].uniqueIdNotes;
+      const currentUniqueIdNotes = this.menuLayout[index].uniqueIdNotes;
+      const currentUniqueIdTodos = this.menuLayout[index].uniqueIdTodos;
 
-      if (curentUniqueIdNotes != undefined) {
-        localStorage.removeItem(`data${curentUniqueIdNotes}`);
+      if (currentUniqueIdNotes != undefined) {
+        localStorage.removeItem(`data${currentUniqueIdNotes}`);
 
         this.$store.commit("updateNotesData", {
-          id: curentUniqueIdNotes,
+          id: currentUniqueIdNotes,
           data: ""
+        });
+      }
+
+      if (currentUniqueIdTodos != undefined) {
+        localStorage.removeItem(`todoList${currentUniqueIdTodos}`);
+
+        this.$store.commit("updateTodoList", {
+          id: currentUniqueIdNotes,
+          value: []
         });
       }
       this.menuLayout.splice(index, 1);
