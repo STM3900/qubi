@@ -70,7 +70,6 @@ export default {
     };
   },
   created() {
-    console.log(this.uniqueIdTodos);
     if (localStorage.getItem(`todoList${this.uniqueIdTodos}`)) {
       this.$store.commit("updateTodoList", {
         id: this.uniqueIdTodos,
@@ -78,8 +77,12 @@ export default {
       });
       this.todoListData = this.$store.state.todosData[this.uniqueIdTodos];
       this.isInStore = true;
+    } else {
+      this.$store.commit("updateTodoList", {
+        id: this.uniqueIdTodos,
+        value: []
+      });
     }
-    console.log(this.$store.state.todosData[this.uniqueIdTodos]);
   },
   methods: {
     setCooldown() {

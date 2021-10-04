@@ -59,6 +59,8 @@ export default {
     return {
       uniqueIdNotes: 0,
       uniqueIdTodos: 0,
+      uniqueIdNotesList: [],
+      uniqueIdTodosList: [],
       menuLayout: [],
       fillerTab: [],
 
@@ -69,6 +71,10 @@ export default {
   },
   mounted() {
     this.menuLayout = JSON.parse(localStorage.getItem("layout")) ?? [];
+    this.uniqueIdNotesList =
+      JSON.parse(localStorage.getItem("uniqueIdNotesList")) ?? [];
+    this.uniqueIdTodosList =
+      JSON.parse(localStorage.getItem("uniqueIdTodosList")) ?? [];
     /*
       this.deleteCardLayout("filler");
       this.generateFillers();
@@ -100,19 +106,37 @@ export default {
       card.x = 0;
       card.y = 0;
       if (card.selected == "notes") {
-        if (this.uniqueIdNotes >= 3) {
-          this.uniqueIdNotes = 0;
-        }
-        card.uniqueIdNotes = this.uniqueIdNotes;
-        this.uniqueIdNotes++;
-      } else if (card.selected == "todo") {
-        if (this.uniqueIdTodos >= 3) {
-          this.uniqueIdTodos = 0;
+        let uniqueIdOk;
+
+        if (this.uniqueIdNotesList.length) {
+          uniqueIdOk = this.uniqueIdNotesList[0];
+          this.uniqueIdNotesList.shift();
+        } else {
+          if (this.uniqueIdNotes >= 3) {
+            this.uniqueIdNotes = 0;
+          }
+          uniqueIdOk = this.uniqueIdNotes;
         }
 
-        card.uniqueIdTodos = this.uniqueIdTodos;
-        console.log("todo ajouté avec l'id " + this.uniqueIdTodos);
+        card.uniqueIdNotes = uniqueIdOk;
+        this.uniqueIdNotes++;
+        console.log("carte ajouté avec l'id " + uniqueIdOk);
+      } else if (card.selected == "todo") {
+        let uniqueIdOk;
+
+        if (this.uniqueIdTodosList.length) {
+          uniqueIdOk = this.uniqueIdTodosList[0];
+          this.uniqueIdTodosList.shift();
+        } else {
+          if (this.uniqueIdTodos >= 3) {
+            this.uniqueIdTodos = 0;
+          }
+          uniqueIdOk = this.uniqueIdTodos;
+        }
+
+        card.uniqueIdTodos = uniqueIdOk;
         this.uniqueIdTodos++;
+        console.log("carte ajouté avec l'id " + uniqueIdOk);
       }
 
       this.menuLayout.push(card);
@@ -131,6 +155,12 @@ export default {
       if (currentUniqueIdNotes != undefined) {
         localStorage.removeItem(`data${currentUniqueIdNotes}`);
 
+        this.uniqueIdNotesList.push(currentUniqueIdNotes);
+        localStorage.setItem(
+          "uniqueIdNotesList",
+          JSON.stringify(this.uniqueIdNotesList)
+        );
+
         this.$store.commit("updateNotesData", {
           id: currentUniqueIdNotes,
           data: ""
@@ -139,6 +169,12 @@ export default {
 
       if (currentUniqueIdTodos != undefined) {
         localStorage.removeItem(`todoList${currentUniqueIdTodos}`);
+
+        this.uniqueIdTodosList.push(currentUniqueIdTodos);
+        localStorage.setItem(
+          "uniqueIdTodosList",
+          JSON.stringify(this.uniqueIdTodosList)
+        );
 
         this.$store.commit("updateTodoList", {
           id: currentUniqueIdNotes,
