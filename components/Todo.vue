@@ -1,6 +1,5 @@
 <template>
   <div class="todo">
-    <p>{{ uniqueIdTodos }}</p>
     <div
       v-for="(item, i) in $store.state.todosData[uniqueIdTodos]"
       :key="i"

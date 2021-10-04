@@ -63,9 +63,15 @@
       </section>
       <Background />
     </div>
-    <button v-if="selected != 'menu'" @click="deleteCardButton(selected)">
-      delete
-    </button>
+    <fa
+      class="icon delete-button"
+      icon="times"
+      :style="{
+        'border-bottom-color': $store.state.backgroundColor,
+        'border-left-color': $store.state.backgroundColor
+      }"
+      @click="deleteCardButton(selected)"
+    />
   </div>
 </template>
 
@@ -151,6 +157,22 @@ section {
 
 .card p {
   margin-top: 5px;
+}
+
+.delete-button {
+  position: absolute;
+  top: -0px;
+  right: -0px;
+  font-size: 18px;
+  padding: 8px 16px;
+  border-bottom: solid 4px;
+  border-left: solid 4px;
+  border-bottom-left-radius: 5px;
+  transition: 0.3s;
+}
+
+.delete-button:hover {
+  cursor: pointer;
 }
 
 .timer {
