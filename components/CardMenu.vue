@@ -11,7 +11,8 @@
         :icon="item.icon"
         :style="{ color: `hsl(${item.color}, 70%, 70%)` }"
       />
-      {{ item.name }} - {{ item.numberAvailable }}
+      {{ item.name }}
+      <span v-if="item.numberAvailable > 1">: {{ item.numberAvailable }}</span>
     </p>
   </nav>
 </template>

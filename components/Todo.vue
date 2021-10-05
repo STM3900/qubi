@@ -29,7 +29,11 @@
         ></textarea>
       </section>
       <section class="todo-list-button">
-        <fa @click="removeTodo(i)" class="todo-icon" icon="times" />
+        <fa
+          @click="removeTodo(i)"
+          class="todo-icon todo-icon-secondary"
+          icon="times"
+        />
         <fa
           v-if="!item.onEdit"
           @click="
@@ -102,7 +106,10 @@ export default {
         id: this.uniqueIdTodos,
         index: index
       });
-      this.todoListData.splice(index, 1);
+      if (!this.isInStore) {
+        this.todoListData.splice(index, 1);
+      }
+
       this.saveTodos();
     },
     addTodo() {
@@ -250,6 +257,11 @@ export default {
   justify-content: flex-end;
   align-items: flex-start;
   align-content: center;
+  color: rgb(50, 50, 50);
+}
+
+.todo-icon-secondary {
+  color: rgb(200, 200, 200);
 }
 
 .todo-list-button .todo-icon {
@@ -284,5 +296,37 @@ export default {
 
 .finished {
   text-decoration: line-through;
+}
+
+/* test */
+
+input[type="checkbox"] {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
+
+input[type="checkbox"] + label::before {
+  content: "\a0";
+  display: inline-block;
+  margin: 0.2em 0.5em;
+  margin-left: 0;
+  width: 0.8em;
+  height: 0.8em;
+  line-height: 0.75em;
+  transition: all 0.5s;
+  border: 1px solid silver;
+  border-radius: 3px;
+}
+
+input[type="radio"] + label::before {
+  border-radius: 50%;
+}
+
+input[type="checkbox"]:checked + label::before {
+  content: "\a0";
+  background: hsl(0, 70%, 70%);
+  border: 1px solid white;
+  box-shadow: inset 0 0 0 1px white, 0 0 0 1px hsl(0, 70%, 70%);
+  margin-left: 5px;
 }
 </style>

@@ -92,6 +92,7 @@
       <Background />
     </div>
     <fa
+      v-if="selected != 'menu'"
       class="icon delete-button"
       icon="times"
       :style="{
@@ -191,12 +192,13 @@ section {
   position: absolute;
   top: -0px;
   right: -0px;
-  font-size: 18px;
-  padding: 8px 16px;
-  border-bottom: solid 4px;
-  border-left: solid 4px;
+  font-size: 16px;
+  padding: 8px 14px;
+  border-bottom: solid 3px;
+  border-left: solid 3px;
   border-bottom-left-radius: 5px;
   transition: 0.3s;
+  color: rgb(50, 50, 50);
 }
 
 .delete-button:hover {
