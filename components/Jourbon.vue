@@ -4,7 +4,10 @@
     <fa
       class="icon-jourbon"
       :class="{ loop: loopActive }"
-      :style="{ transition: transitionValue }"
+      :style="{
+        transition: transitionValue,
+        color: `hsl(${this.$store.state.cardList[6].color}, 70%, 70%)`
+      }"
       @click="getJourBon()"
       icon="redo"
     />
@@ -104,7 +107,6 @@ input {
 }
 
 .icon-jourbon {
-  color: #ef476f;
   width: 10%;
 }
 

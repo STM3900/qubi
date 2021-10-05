@@ -9,42 +9,66 @@
     </div>
     <div class="card" v-if="selected == 'clock'">
       <section>
-        <fa class="icon" icon="clock" />
+        <fa
+          class="icon"
+          icon="clock"
+          :style="{ color: `hsl(${store[2].color}, 70%, 70%)` }"
+        />
         <h3>Heure du jour</h3>
       </section>
       <Time />
     </div>
     <div class="card" v-if="selected == 'notes'">
       <section>
-        <fa class="icon" icon="sticky-note" />
+        <fa
+          class="icon"
+          icon="sticky-note"
+          :style="{ color: `hsl(${store[1].color}, 70%, 70%)` }"
+        />
         <h3>Mes notes</h3>
       </section>
       <Note :uniqueIdNotes="uniqueIdCardNotes" />
     </div>
     <div class="card" v-if="selected == 'jourbon'">
       <section>
-        <fa class="icon" icon="random" style="color: #ef476f;" />
+        <fa
+          class="icon"
+          icon="random"
+          :style="{ color: `hsl(${store[6].color}, 70%, 70%)` }"
+        />
         <h3>Jourbon</h3>
       </section>
       <Jourbon />
     </div>
     <div class="card" :class="{ timer: shakeTimer }" v-if="selected == 'timer'">
       <section>
-        <fa class="icon" icon="hourglass" />
+        <fa
+          class="icon"
+          icon="hourglass"
+          :style="{ color: `hsl(${store[4].color}, 70%, 70%)` }"
+        />
         <h3>Timer</h3>
       </section>
       <Timer @shakeTimer="shakeTimer = !shakeTimer" />
     </div>
     <div class="card" v-if="selected == 'todo'">
       <section>
-        <fa class="icon" icon="list-ul" />
+        <fa
+          class="icon"
+          icon="list-ul"
+          :style="{ color: `hsl(${store[0].color}, 70%, 70%)` }"
+        />
         <h3>Ma TodoList</h3>
       </section>
       <Todo :uniqueIdTodos="uniqueIdCardTodos" />
     </div>
     <div class="card" v-if="selected == 'stopwatch'">
       <section>
-        <fa class="icon" icon="stopwatch" />
+        <fa
+          class="icon"
+          icon="stopwatch"
+          :style="{ color: `hsl(${store[3].color}, 70%, 70%)` }"
+        />
         <h3>Chronomètre</h3>
       </section>
       <Stopwatch />
@@ -58,7 +82,11 @@
     </div>
     <div class="card" v-if="selected == 'background'">
       <section>
-        <fa class="icon" icon="code" />
+        <fa
+          class="icon"
+          icon="code"
+          :style="{ color: `hsl(${store[5].color}, 70%, 70%)` }"
+        />
         <h3>Fond d'écran</h3>
       </section>
       <Background />
@@ -87,7 +115,7 @@ export default {
   data() {
     return {
       shakeTimer: false,
-      ntm: ["ntm connard", "ntm l'informatique", "ntm ma vie"]
+      store: this.$store.state.cardList
     };
   },
   methods: {

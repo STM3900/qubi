@@ -6,9 +6,12 @@
       :class="{ inactive: !item.active }"
       @click="item.active ? activateItem(item) : ''"
     >
-      <fa class="icon-menu" :icon="item.icon" />
-      {{ item.name }}
-      {{ item.numberAvailable }}
+      <fa
+        class="icon-menu"
+        :icon="item.icon"
+        :style="{ color: `hsl(${item.color}, 70%, 70%)` }"
+      />
+      {{ item.name }} - {{ item.numberAvailable }}
     </p>
   </nav>
 </template>
@@ -16,7 +19,9 @@
 <script>
 export default {
   name: "CardMenu",
-
+  data() {
+    return { palette: 0 };
+  },
   mounted() {
     if (localStorage.getItem("layoutMenu")) {
       this.$store.commit(

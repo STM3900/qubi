@@ -5,10 +5,27 @@ export const state = () => ({
   cardCanMove: true,
   cardList: [
     {
+      name: "Ma TodoList",
+      icon: "list-ul",
+      selected: "todo",
+      active: true,
+      color: 0,
+      numberAvailable: 3,
+      numberMax: 3,
+
+      isResizable: true,
+      minW: 3,
+      minH: 6,
+
+      w: 3,
+      h: 8
+    },
+    {
       name: "Mes notes",
       icon: "sticky-note",
       selected: "notes",
       active: true,
+      color: 55,
 
       isResizable: true,
       minW: 2,
@@ -24,6 +41,7 @@ export const state = () => ({
       icon: "clock",
       selected: "clock",
       active: true,
+      color: 100,
       numberAvailable: 1,
       numberMax: 1,
 
@@ -31,10 +49,12 @@ export const state = () => ({
       h: 3
     },
     {
-      name: "Jourbon",
-      icon: "random",
-      selected: "jourbon",
+      name: "Chronomètre",
+      icon: "stopwatch",
+      selected: "stopwatch",
       active: true,
+      color: 150,
+      static: false,
       numberAvailable: 1,
       numberMax: 1,
 
@@ -46,33 +66,7 @@ export const state = () => ({
       icon: "hourglass",
       selected: "timer",
       active: true,
-      numberAvailable: 1,
-      numberMax: 1,
-
-      w: 3,
-      h: 3
-    },
-    {
-      name: "Ma TodoList",
-      icon: "list-ul",
-      selected: "todo",
-      active: true,
-      numberAvailable: 3,
-      numberMax: 3,
-
-      isResizable: true,
-      minW: 3,
-      minH: 6,
-
-      w: 3,
-      h: 8
-    },
-    {
-      name: "Chronomètre",
-      icon: "stopwatch",
-      selected: "stopwatch",
-      active: true,
-      static: false,
+      color: 200,
       numberAvailable: 1,
       numberMax: 1,
 
@@ -82,9 +76,22 @@ export const state = () => ({
     {
       name: "Fond d'écran",
       icon: "code",
+      color: 250,
       selected: "background",
       active: true,
       static: false,
+      numberAvailable: 1,
+      numberMax: 1,
+
+      w: 3,
+      h: 3
+    },
+    {
+      name: "Jourbon",
+      icon: "random",
+      selected: "jourbon",
+      active: true,
+      color: 320,
       numberAvailable: 1,
       numberMax: 1,
 

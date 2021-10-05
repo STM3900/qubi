@@ -259,10 +259,6 @@ export default {
   gap: 15px 25px;
 }
 
-.hidden {
-  /* visibility: hidden; */
-}
-
 /* grid layout */
 
 .vue-grid-layout {
@@ -278,6 +274,8 @@ export default {
 .vue-grid-item:not(.vue-grid-placeholder) {
   background: white;
   border-radius: 5px;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .vue-grid-item .content {
