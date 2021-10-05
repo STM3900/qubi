@@ -5,6 +5,9 @@
         <fa
           class="icon-background"
           icon="image"
+          :style="{
+            color: `hsl(${this.$store.state.cardList[5].color}, 70%, 70%)`
+          }"
           @click="
             showInput = !showInput;
             checkInput();

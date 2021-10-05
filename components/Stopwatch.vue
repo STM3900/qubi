@@ -15,6 +15,9 @@
         @click="launchTimer"
         class="icon-chrono"
         icon="play"
+        :style="{
+          color: `hsl(${this.$store.state.cardList[3].color}, 70%, 70%)`
+        }"
       />
       <div v-else>
         <fa

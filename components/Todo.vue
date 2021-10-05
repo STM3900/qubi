@@ -43,7 +43,14 @@
       </section>
     </div>
     <div class="add-todo">
-      <fa @click="addTodo" class="todo-icon" icon="plus" />
+      <fa
+        @click="addTodo"
+        class="todo-icon"
+        icon="plus"
+        :style="{
+          color: `hsl(${this.$store.state.cardList[0].color}, 70%, 70%)`
+        }"
+      />
       <input
         type="text"
         v-model="addLabel"

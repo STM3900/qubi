@@ -31,7 +31,14 @@ event.keyCode === 46 ? true : !isNaN(Number(event.key))"
         />
       </section>
       <section>
-        <fa @click="launchTimer" class="icon-timer play-button" icon="play" />
+        <fa
+          @click="launchTimer"
+          class="icon-timer play-button"
+          icon="play"
+          :style="{
+            color: `hsl(${this.$store.state.cardList[4].color}, 70%, 70%)`
+          }"
+        />
       </section>
     </div>
     <div v-else class="active timer-card">
