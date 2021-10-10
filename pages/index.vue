@@ -129,7 +129,6 @@ export default {
 
         card.uniqueIdNotes = uniqueIdOk;
         this.uniqueIdNotes++;
-        console.log("carte ajouté avec l'id " + uniqueIdOk);
       } else if (card.selected == "todo") {
         let uniqueIdOk;
 
@@ -145,7 +144,6 @@ export default {
 
         card.uniqueIdTodos = uniqueIdOk;
         this.uniqueIdTodos++;
-        console.log("carte ajouté avec l'id " + uniqueIdOk);
       }
 
       this.menuLayout.push(card);

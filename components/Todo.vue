@@ -188,8 +188,6 @@ export default {
       this.todoListData = this.$store.state.todosData[this.uniqueIdTodos];
     },
     toggleTodoData(i) {
-      console.log(i);
-      console.log(this.uniqueIdTodos);
       this.$store.commit("updateTodosFinished", {
         id: this.uniqueIdTodos,
         index: i,

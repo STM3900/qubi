@@ -48,7 +48,7 @@ export default {
   name: "Background",
   data() {
     return {
-      showPanel: false,
+      showPanel: true,
       showInput: false,
 
       colorDotDisabled: {
@@ -113,8 +113,6 @@ export default {
     }
   }
 };
-
-/*:style="{ backgroundColor: color }" @click="setBackground"*/
 </script>
 
 <style scoped>
@@ -209,7 +207,7 @@ input[type="text"] {
 
 .color-panel {
   position: absolute;
-  right: 15px;
+  left: 100px;
   top: 75px;
   clip-path: circle(0% at 0% 0%);
   transition: 0.3s;
@@ -218,7 +216,12 @@ input[type="text"] {
 .showpanel {
   transition: 0.8s;
   top: 120px;
-  /* right: 0px; */
   clip-path: circle(100%);
+}
+
+@media screen and (max-width: 400px) {
+  .color-panel {
+    left: 0;
+  }
 }
 </style>
