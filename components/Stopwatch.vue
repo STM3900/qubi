@@ -1,8 +1,14 @@
 <template>
   <div class="chrono-card">
     <div class="chrono-text-container">
-      <p v-if="!isTimerActive" class="chrono-text">00:00:00</p>
-      <p v-else class="chrono-text">
+      <p v-if="!isTimerActive" class="chrono-text timer-inactive">
+        00:00:00
+      </p>
+      <p
+        v-else
+        class="chrono-text"
+        :class="[isPaused ? 'timer-inactive' : 'timer-active']"
+      >
         {{ convertToString(timerCountHours) }}:{{
           convertToString(timerCountMinutes)
         }}:{{ convertToString(timerCountSeconds) }}
@@ -21,18 +27,31 @@
       />
       <div v-else>
         <fa
+          @click="resetTimer"
+          class="icon-chrono active-icons"
+          icon="stop"
+          :style="{
+            color: `hsl(${this.$store.state.cardList[3].color}, 70%, 70%, 0.6)`
+          }"
+        />
+        <fa
           v-if="!isPaused"
           @click="pauseTimer"
           class="icon-chrono active-icons"
           icon="pause"
+          :style="{
+            color: `hsl(${this.$store.state.cardList[3].color}, 70%, 70%)`
+          }"
         />
         <fa
           v-else
           @click="resumeTimer"
           class="icon-chrono active-icons"
           icon="play"
+          :style="{
+            color: `hsl(${this.$store.state.cardList[3].color}, 70%, 70%)`
+          }"
         />
-        <fa @click="resetTimer" class="icon-chrono active-icons" icon="stop" />
       </div>
     </div>
   </div>
@@ -131,6 +150,7 @@ export default {
   font-size: 36px;
   margin: 0;
   margin-right: 20px;
+  transition: 0.3s;
 }
 
 .chrono-buttons .icon-chrono {
@@ -145,5 +165,13 @@ export default {
 
 .icon-chrono:hover {
   cursor: pointer;
+}
+
+.timer-inactive {
+  color: rgb(200, 200, 200);
+}
+
+.timer-active {
+  color: black;
 }
 </style>
