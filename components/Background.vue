@@ -48,7 +48,7 @@ export default {
   name: "Background",
   data() {
     return {
-      showPanel: true,
+      showPanel: false,
       showInput: false,
 
       colorDotDisabled: {

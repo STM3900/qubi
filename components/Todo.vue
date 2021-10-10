@@ -25,6 +25,7 @@
           @blur="confirmTodo(i)"
           @keyup.enter="confirmTodo(i)"
           @input="autoGrow(i)"
+          @mousedown="$store.commit('updateCardCanMove', false)"
           v-model="todoListData[i].label"
         ></textarea>
       </section>
@@ -59,6 +60,7 @@
         type="text"
         v-model="addLabel"
         @keyup.enter="addTodo"
+        @mousedown="$store.commit('updateCardCanMove', false)"
         placeholder="Nouvelle Todo"
       />
     </div>
@@ -170,7 +172,7 @@ export default {
     autoGrow(index) {
       if (this.cooldownStatus) {
         setTimeout(() => {
-          const ref = this.$refs[`textarea${index}`][0]; // à l'arrache hein
+          const ref = this.$refs[`textarea${index}${this.uniqueIdTodos}`][0]; // à l'arrache hein
           ref.style.height = "5px";
           ref.style.height = ref.scrollHeight + "px";
           ref.focus();
