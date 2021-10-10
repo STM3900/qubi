@@ -5,9 +5,6 @@
         <fa
           class="icon-background"
           icon="image"
-          :style="{
-            color: `hsl(${this.$store.state.cardList[5].color}, 70%, 70%)`
-          }"
           @click="
             showInput = !showInput;
             checkInput();
@@ -19,6 +16,7 @@
           :class="[showInput ? 'input-extended' : 'input-hide']"
           id="backgroundUrl"
           @input="setBackgroundImg"
+          @mousedown="$store.commit('updateCardCanMove', false)"
         />
       </section>
       <section>
@@ -166,6 +164,14 @@ h1 {
 
 .section-extended {
   width: 223px;
+}
+
+input[type="text"] {
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  font-family: "Quicksand", sans-serif;
+  font-size: 14px;
 }
 
 .input-hide {
