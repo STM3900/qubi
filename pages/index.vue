@@ -30,6 +30,11 @@
           :minH="item.minH"
           @resized="saveCard"
           @moved="saveCard"
+          :class="
+            item.selected == 'menu' && $store.state.lastItemMenuActive
+              ? 'background-menu'
+              : ''
+          "
         >
           <div
             class="content"
@@ -224,11 +229,19 @@ export default {
   z-index: 10;
 }
 
+.vue-grid-item {
+  transition: 0.3s;
+}
+
 .vue-grid-item:not(.vue-grid-placeholder) {
   background: white;
   border-radius: 5px;
 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.background-menu {
+  background: rgb(245, 245, 245) !important;
 }
 
 .vue-grid-item .content {

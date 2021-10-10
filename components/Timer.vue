@@ -157,7 +157,6 @@ export default {
       setTimeout(() => {
         this.$emit("shakeTimer");
       }, 300);
-      console.log("timer terminé !");
     },
     pauseTimer() {
       clearTimeout(this.timeout);

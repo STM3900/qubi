@@ -101,7 +101,8 @@ export const state = () => ({
   ],
   indexOfSelected: 0,
   notesData: ["", "", ""],
-  todosData: [[], [], []]
+  todosData: [[], [], []],
+  lastItemMenuActive: false
 });
 
 export const mutations = {
@@ -132,6 +133,10 @@ export const mutations = {
   },
   changeValueOfItem(state, payload) {
     this.commit("getIndexOfSelected", payload.selected);
+    if (state.indexOfSelected == state.cardList.length - 1) {
+      this.commit("setLastItemMenu", false);
+      localStorage.setItem("lastItem", false);
+    }
     state.cardList[state.indexOfSelected].numberAvailable += payload.value;
   },
   toggleItem(state, payload) {
@@ -165,5 +170,8 @@ export const mutations = {
   },
   toggleTodoActive(state, payload) {
     state.todosData[payload.id][payload.index].active = payload.toggleValue;
+  },
+  setLastItemMenu(state, value) {
+    state.lastItemMenuActive = value;
   }
 };

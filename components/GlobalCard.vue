@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="card" v-if="selected == 'truc'">
+  <div :class="selected == 'menu' ? 'menu-background-card' : ''">
+    <div v-if="selected == 'truc'">
       <section>
         <fa class="icon" icon="code" />
         <h3>Titre de ma carte</h3>
@@ -127,10 +127,6 @@ export default {
       this.$emit("delete-card-layout", selected);
     },
     deleteCardButton(selected) {
-      const indexSelected = this.$store.state.indexOfSelected;
-      const storenumberAvailable = this.$store.state.cardList[indexSelected]
-        .numberAvailable;
-
       this.$store.commit("changeValueOfItem", {
         selected: selected,
         value: 1
@@ -154,6 +150,11 @@ export default {
 <style scoped>
 div {
   height: calc(100% - 45px);
+}
+
+.menu-background-card {
+  background: white;
+  border-radius: 5px;
 }
 
 section {

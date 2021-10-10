@@ -4,7 +4,7 @@
       v-for="(item, i) in $store.state.cardList"
       :key="i"
       :class="{ inactive: !item.active }"
-      @click="item.active ? activateItem(item) : ''"
+      @click="item.active ? activateItem(item, i) : ''"
     >
       <fa
         class="icon-menu"
@@ -39,11 +39,18 @@ export default {
         }
       }
 
+      if (localStorage.getItem("lastItem") != undefined) {
+        this.$store.commit(
+          "setLastItemMenu",
+          JSON.parse(localStorage.getItem("lastItem"))
+        );
+      }
+
       this.saveMenu();
     }
   },
   methods: {
-    activateItem(item) {
+    activateItem(item, i) {
       const selected = item.selected;
       if (item.numberAvailable > 0) {
         this.$store.commit("changeValueOfItem", {
@@ -71,6 +78,10 @@ export default {
           minH
         };
 
+        if (i == this.$store.state.cardList.length - 1) {
+          this.$store.commit("setLastItemMenu", true);
+          localStorage.setItem("lastItem", true);
+        }
         this.$emit("add-card", objectCard);
         this.saveMenu();
       }
