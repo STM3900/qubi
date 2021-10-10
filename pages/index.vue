@@ -28,10 +28,14 @@
           :isDraggable="$store.state.cardCanMove"
           :minW="item.minW"
           :minH="item.minH"
+          :maxW="item.maxW"
+          :maxH="item.maxH"
           @resized="saveCard"
           @moved="saveCard"
           :class="
-            item.selected == 'menu' && $store.state.lastItemMenuActive
+            item.selected == 'menu' &&
+            $store.state.lastItemMenuActive &&
+            item.h > 8
               ? 'background-menu'
               : ''
           "
@@ -89,9 +93,16 @@ export default {
       this.menuLayout.push({
         selected: "menu",
         w: 2,
-        h: 10,
+        h: 11,
         x: 0,
-        y: 0
+        y: 0,
+
+        isResizable: true,
+        minW: 2,
+        minH: 2,
+
+        maxW: 2,
+        maxH: 11
       });
     }
 
@@ -230,7 +241,8 @@ export default {
 }
 
 .vue-grid-item {
-  transition: 0.3s;
+  transition: background-color 0.3s;
+  overflow: hidden;
 }
 
 .vue-grid-item:not(.vue-grid-placeholder) {

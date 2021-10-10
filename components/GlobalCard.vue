@@ -91,6 +91,17 @@
       </section>
       <Background />
     </div>
+    <div class="card" v-if="selected == 'fact'">
+      <section>
+        <fa
+          class="icon"
+          icon="lightbulb"
+          :style="{ color: `hsl(${store[7].color}, 70%, 70%)` }"
+        />
+        <h3>Anecdote du jour</h3>
+      </section>
+      <Fact />
+    </div>
     <fa
       v-if="selected != 'menu'"
       class="icon delete-button"

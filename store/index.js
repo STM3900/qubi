@@ -97,6 +97,18 @@ export const state = () => ({
 
       w: 3,
       h: 3
+    },
+    {
+      name: "Anecdote du jour",
+      icon: "lightbulb",
+      selected: "fact",
+      active: true,
+      color: 350,
+      numberAvailable: 1,
+      numberMax: 1,
+
+      w: 3,
+      h: 3
     }
   ],
   indexOfSelected: 0,

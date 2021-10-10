@@ -55,7 +55,8 @@ export default {
               "faClock",
               "faStickyNote",
               "faHourglass",
-              "faImage"
+              "faImage",
+              "faLightbulb"
             ]
           },
           {
