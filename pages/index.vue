@@ -30,7 +30,6 @@
           :minH="item.minH"
           @resized="saveCard"
           @moved="saveCard"
-          :class="getClass(item.selected)"
         >
           <div
             class="content"
@@ -75,10 +74,6 @@ export default {
       JSON.parse(localStorage.getItem("uniqueIdNotesList")) ?? [];
     this.uniqueIdTodosList =
       JSON.parse(localStorage.getItem("uniqueIdTodosList")) ?? [];
-    /*
-      this.deleteCardLayout("filler");
-      this.generateFillers();
-    */
     let isMenu = false;
     for (let i = 0; i < this.menuLayout.length; i++) {
       if (this.menuLayout[i].selected == "menu") {
@@ -93,6 +88,20 @@ export default {
         x: 0,
         y: 0
       });
+    }
+
+    /*background */
+    if (localStorage.getItem("backgroundColor")) {
+      this.$store.commit(
+        "updateBackgroundColor",
+        localStorage.getItem("backgroundColor")
+      );
+    }
+    if (localStorage.getItem("backgroundImg")) {
+      this.$store.commit(
+        "updateBackgroundImage",
+        localStorage.getItem("backgroundImg")
+      );
     }
 
     this.menuLayout = this.menuLayout.concat(this.fillerTab);
@@ -189,60 +198,6 @@ export default {
       for (let i = 0; i < this.menuLayout.length; i++) {
         this.menuLayout[i].i = i + 1;
       }
-    },
-    getClass(item) {
-      return item == "filler" ? "hidden" : "";
-    },
-    generateFillers() {
-      let counter = 0;
-      let heightCounter = 0;
-      let pass = true;
-      const bannedCoords = [];
-      let counterTab = 0;
-
-      let fillerWidth = 1;
-      let fillerHeight = 1;
-
-      for (let i = 0; i < this.menuLayout.length; i++) {
-        for (let j = 0; j < this.menuLayout[i].h; j++) {
-          for (let k = 0; k < this.menuLayout[i].w; k++) {
-            bannedCoords.push({
-              x: this.menuLayout[i].x + k,
-              y: this.menuLayout[i].y + j
-            });
-          }
-        }
-      }
-      for (let i = 0; i < 288; i++) {
-        while (counterTab < bannedCoords.length && pass) {
-          if (
-            bannedCoords[counterTab].x == counter &&
-            bannedCoords[counterTab].y == heightCounter
-          ) {
-            pass = false;
-          }
-          counterTab++;
-        }
-        counterTab = 0;
-        if (pass) {
-          this.fillerTab.push({
-            selected: "filler",
-            w: fillerWidth,
-            h: fillerHeight,
-            x: counter,
-            y: heightCounter,
-            isDraggable: false
-          });
-        } else {
-          pass = true;
-        }
-        counter++;
-
-        if (counter > 11) {
-          counter = 0;
-          heightCounter++;
-        }
-      }
     }
   }
 };
@@ -326,5 +281,9 @@ export default {
   background-origin: content-box;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+.testcard {
+  transform: rotate(10deg);
 }
 </style>
