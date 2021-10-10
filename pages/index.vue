@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Overlayqubi />
     <client-only>
       <grid-layout
         :style="{
