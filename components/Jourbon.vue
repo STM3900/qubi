@@ -1,6 +1,11 @@
 <template>
   <div>
-    <input v-model="text" type="text" @keyup.enter="getJourBon()" />
+    <input
+      v-model="text"
+      type="text"
+      @keyup.enter="getJourBon()"
+      @mousedown="$store.commit('updateCardCanMove', false)"
+    />
     <fa
       class="icon-jourbon"
       :class="{ loop: loopActive }"
@@ -19,7 +24,7 @@ export default {
   name: "Jourbon",
   data() {
     return {
-      text: "Jourbon",
+      text: "",
       j: 0,
       midText: "",
       loopActive: false,
@@ -27,6 +32,7 @@ export default {
     };
   },
   mounted() {
+    this.text = localStorage.getItem("jourbon") ?? "Jourbon";
     setTimeout(() => {
       this.getJourBon(true);
     }, 500);
@@ -45,6 +51,7 @@ export default {
     getJourBon(firstTime = false) {
       if (!firstTime) {
         this.loopIcon();
+        this.saveText();
       }
 
       const start = this.generateTab();
@@ -82,6 +89,9 @@ export default {
         this.transitionValue = "0s";
         this.loopActive = false;
       }, 300);
+    },
+    saveText() {
+      localStorage.setItem("jourbon", this.text);
     }
   }
 };
