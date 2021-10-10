@@ -211,27 +211,25 @@ section {
 
 @keyframes tremblementerror {
   0% {
-    transform: translate(0);
+    transform: translate(1px, 1px) rotate(0deg);
   }
-
-  20% {
-    transform: translate(10px);
+  16% {
+    transform: translate(-1px, -2px) rotate(-1deg);
   }
-
-  40% {
-    transform: translate(-10px);
+  32% {
+    transform: translate(-3px, 0px) rotate(1deg);
   }
-
-  60% {
-    transform: translate(10px);
+  48% {
+    transform: translate(3px, 2px) rotate(0deg);
   }
-
+  64% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
   80% {
-    transform: translate(-10px);
+    transform: translate(-1px, 2px) rotate(-1deg);
   }
-
   100% {
-    transform: translate(0);
+    transform: translate(-3px, 1px) rotate(0deg);
   }
 }
 </style>

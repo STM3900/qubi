@@ -49,18 +49,31 @@ event.keyCode === 46 ? true : !isNaN(Number(event.key))"
       </section>
       <section>
         <fa
+          @click="finishTimer"
+          class="icon-timer active-icons"
+          icon="stop"
+          :style="{
+            color: `hsl(${this.$store.state.cardList[4].color}, 70%, 70%, 0.6)`
+          }"
+        />
+        <fa
           v-if="!isPaused"
           @click="pauseTimer"
           class="icon-timer active-icons"
           icon="pause"
+          :style="{
+            color: `hsl(${this.$store.state.cardList[4].color}, 70%, 70%)`
+          }"
         />
         <fa
           v-else
           @click="resumeTimer"
           class="icon-timer active-icons"
           icon="play"
+          :style="{
+            color: `hsl(${this.$store.state.cardList[4].color}, 70%, 70%)`
+          }"
         />
-        <fa @click="finishTimer" class="icon-timer active-icons" icon="stop" />
       </section>
     </div>
   </div>
@@ -155,10 +168,16 @@ export default {
       this.useTimer(this.timerCountSeconds);
     },
     launchTimer() {
-      this.isTimerActive = true;
-      this.timerCountHours = +this.timerCountHoursString;
-      this.timerCountMinutes = +this.timerCountMinutesString;
-      this.timerCountSeconds = +this.timerCountSecondsString;
+      if (
+        +this.timerCountHoursString > 0 ||
+        +this.timerCountMinutesString > 0 ||
+        +this.timerCountSecondsString > 0
+      ) {
+        this.isTimerActive = true;
+        this.timerCountHours = +this.timerCountHoursString;
+        this.timerCountMinutes = +this.timerCountMinutesString;
+        this.timerCountSeconds = +this.timerCountSecondsString;
+      }
     },
     test(index, isClicked = false, isDeFocus = false) {
       switch (index) {
@@ -219,8 +238,6 @@ export default {
 </script>
 
 <style scoped>
-/* font-family: "Roboto Mono", monospace; */
-
 .timer-card {
   display: flex;
   flex-direction: row;
@@ -270,6 +287,7 @@ export default {
   border: none;
   appearance: none;
   text-align: center;
+  color: rgb(200, 200, 200);
 }
 
 .timer {
@@ -283,6 +301,10 @@ span {
   font-size: 36px;
   margin-right: -7.2px;
   margin-left: -7.2px;
+}
+
+input {
+  color: rgb(200, 200, 200);
 }
 
 input::-webkit-outer-spin-button,
