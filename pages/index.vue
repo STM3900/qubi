@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Overlayqubi />
+    <Overlayqubi v-if="firstTime" @hideoverlay="hideOverlay" />
+    <Footer v-else />
     <client-only>
       <grid-layout
         :style="{
@@ -75,10 +76,17 @@ export default {
 
       draggable: true,
       resizable: false,
-      responsive: true
+      responsive: true,
+      firstTime: false
     };
   },
   mounted() {
+    if (JSON.parse(localStorage.getItem("notFirstTime"))) {
+      this.hideOverlay();
+    } else {
+      this.firstTime = true;
+    }
+
     this.menuLayout = JSON.parse(localStorage.getItem("layout")) ?? [];
     this.uniqueIdNotesList =
       JSON.parse(localStorage.getItem("uniqueIdNotesList")) ?? [];
@@ -125,6 +133,9 @@ export default {
     this.updateCardId();
   },
   methods: {
+    hideOverlay() {
+      this.firstTime = false;
+    },
     saveCard() {
       localStorage.setItem("layout", JSON.stringify(this.menuLayout));
     },
@@ -233,17 +244,11 @@ export default {
 
 .vue-grid-layout {
   min-height: 100vh;
-  overflow: hidden;
 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 10;
-}
-
-.vue-grid-item {
-  transition: background-color 0.3s;
-  overflow: hidden;
 }
 
 .vue-grid-item:not(.vue-grid-placeholder) {
@@ -253,8 +258,14 @@ export default {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
+.vue-grid-item:first-child {
+  overflow: hidden;
+  transition: 0.3s;
+}
+
 .background-menu {
-  background: rgb(245, 245, 245) !important;
+  background: #fafafa !important;
+  transition: 0.3s;
 }
 
 .vue-grid-item .content {

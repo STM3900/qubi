@@ -150,5 +150,6 @@ p:hover {
 .inactive {
   background: rgb(245, 245, 245);
   color: black;
+  opacity: 0.5;
 }
 </style>

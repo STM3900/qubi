@@ -5,3 +5,18 @@ body {
 .vue-grid-item.vue-grid-placeholder {
   background: rgba(0, 0, 0, 0.3) !important;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  background: #ffffff;
+  border-left: 1px solid #ffffff;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(50, 50, 50);
+  border-left: 0px solid #ffffff;
+}
