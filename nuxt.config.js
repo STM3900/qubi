@@ -24,7 +24,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: "~/plugins/vue-grid-layout", mode: "client" },
-    { src: "~/plugins/one-colorpicker", mode: "client" }
+    { src: "~/plugins/one-colorpicker", mode: "client" },
+    { src: "~/plugins/GoogleAnalytics.js" }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
