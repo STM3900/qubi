@@ -19,7 +19,8 @@
       >
         <grid-item
           v-for="(item, index) in menuLayout"
-          :static="item.static"
+          v-longclick="() => selectItem(index)"
+          :static="testStatic"
           :x="item.x"
           :y="item.y"
           :w="item.w"
@@ -45,6 +46,12 @@
           <div
             class="content"
             @click="$store.commit('updateCardCanMove', true)"
+            @touchstart="checkSelectedItem(index)"
+            :class="
+              previousIndex != index && !testStatic && $device.isMobile
+                ? 'selected'
+                : ''
+            "
           >
             <GlobalCard
               :selected="item.selected"
@@ -77,7 +84,9 @@ export default {
       draggable: true,
       resizable: false,
       responsive: true,
-      firstTime: false
+      firstTime: false,
+      isSelected: false,
+      previousIndex: undefined
     };
   },
   mounted() {
@@ -132,7 +141,31 @@ export default {
     this.menuLayout = this.menuLayout.concat(this.fillerTab);
     this.updateCardId();
   },
+  computed: {
+    testStatic() {
+      let result = false;
+      if (this.$device.isMobile && !this.isSelected) {
+        result = true;
+      }
+      return result;
+    }
+  },
   methods: {
+    selectItem(index) {
+      if (this.$device.isMobile) {
+        this.isSelected = true;
+        this.previousIndex = index;
+      }
+    },
+    checkSelectedItem(index) {
+      if (index != this.previousIndex && this.$device.isMobile) {
+        this.isSelected = false;
+        this.previousIndex = undefined;
+      }
+    },
+    test() {
+      console.log("test");
+    },
     hideOverlay() {
       this.firstTime = false;
     },
@@ -260,17 +293,22 @@ export default {
 
 .vue-grid-item:first-child {
   overflow: hidden;
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }
 
 .background-menu {
   background: #fafafa !important;
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }
 
 .vue-grid-item .content {
   font-family: "Quicksand", sans-serif;
   height: 100%;
+  transition: 0.3s;
+}
+
+.selected {
+  opacity: 0.4;
 }
 
 .card-padding {

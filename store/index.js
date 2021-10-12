@@ -107,6 +107,10 @@ export const state = () => ({
       numberAvailable: 1,
       numberMax: 1,
 
+      isResizable: true,
+      minW: 3,
+      minH: 3,
+
       w: 3,
       h: 3
     }

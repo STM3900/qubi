@@ -25,7 +25,8 @@ export default {
   plugins: [
     { src: "~/plugins/vue-grid-layout", mode: "client" },
     { src: "~/plugins/one-colorpicker", mode: "client" },
-    { src: "~/plugins/GoogleAnalytics.js" }
+    { src: "~/plugins/GoogleAnalytics.js" },
+    { src: "~/plugins/vue-long-click.js" }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -86,7 +87,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/device"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

@@ -64,4 +64,10 @@ footer a:hover {
     color: rgb(82, 153, 211);
   }
 }
+
+@media screen and (max-width: 400px) {
+  footer {
+    font-size: 10px;
+  }
+}
 </style>

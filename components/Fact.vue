@@ -1,5 +1,7 @@
 <template>
-  <p>"{{ fact }}"</p>
+  <div>
+    <p>"{{ fact }}"</p>
+  </div>
 </template>
 
 <script>
@@ -21,6 +23,12 @@ export default {
 </script>
 
 <style scoped>
+div {
+  /* promis le prochain projet je le structure bien et je refais plus de trucs comme ça */
+  height: calc(100% + 30px);
+  overflow: auto;
+}
+
 p {
   font-style: italic;
   font-size: 14px;
