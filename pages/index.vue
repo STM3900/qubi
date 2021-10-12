@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="!clickedOnCard ? checkSelectedItem(undefined) : ''">
     <Overlayqubi v-if="firstTime" @hideoverlay="hideOverlay" />
     <Footer v-else />
     <client-only>
@@ -86,7 +86,8 @@ export default {
       responsive: true,
       firstTime: false,
       isSelected: false,
-      previousIndex: undefined
+      previousIndex: undefined,
+      clickedOnCard: false
     };
   },
   mounted() {
@@ -155,16 +156,20 @@ export default {
       if (this.$device.isMobile) {
         this.isSelected = true;
         this.previousIndex = index;
+        setTimeout(() => {
+          this.clickedOnCard = false;
+        }, 300);
       }
     },
     checkSelectedItem(index) {
+      index == undefined
+        ? (this.clickedOnCard = false)
+        : (this.clickedOnCard = true);
+
       if (index != this.previousIndex && this.$device.isMobile) {
         this.isSelected = false;
         this.previousIndex = undefined;
       }
-    },
-    test() {
-      console.log("test");
     },
     hideOverlay() {
       this.firstTime = false;
