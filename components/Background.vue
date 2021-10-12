@@ -4,7 +4,7 @@
       <section :class="[showInput ? 'section-extended' : 'section-wraped']">
         <fa
           class="icon-background"
-          icon="image"
+          icon="link"
           @click="
             showInput = !showInput;
             checkInput();
@@ -15,6 +15,7 @@
           v-model="backgroundUrl"
           :class="[showInput ? 'input-extended' : 'input-hide']"
           id="backgroundUrl"
+          placeholder="lien de l'image"
           @input="setBackgroundImg"
           @mousedown="$store.commit('updateCardCanMove', false)"
         />
@@ -184,8 +185,8 @@ input[type="text"] {
 
 .icon-background {
   color: rgb(50, 50, 50);
-  height: 25px;
-  width: 25px;
+  height: 22px;
+  width: 22px;
   border-radius: 50%;
   margin-right: 10px;
 }
