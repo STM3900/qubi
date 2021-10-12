@@ -25,12 +25,16 @@ export default {
 <style scoped>
 div {
   /* promis le prochain projet je le structure bien et je refais plus de trucs comme ça */
-  height: calc(100% + 30px);
+  height: calc(90% + 30px);
   overflow: auto;
+  margin-top: 10px;
 }
 
 p {
   font-style: italic;
   font-size: 14px;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 </style>

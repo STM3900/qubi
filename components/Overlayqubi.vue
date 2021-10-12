@@ -11,6 +11,11 @@
       <p>
         Écrivez des notes, gérez vos todos, et bien plus
       </p>
+      <p v-if="$device.isMobile">
+        <br />
+        <b>Astuce</b> : Vous pouvez déplacer un widget en appuyant longuement
+        dessus
+      </p>
     </section>
     <section>
       <button @click="launchQubi">Commencer</button>
