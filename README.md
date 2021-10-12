@@ -1,7 +1,10 @@
 # Qubi
 
+![logogit](https://user-images.githubusercontent.com/44432694/137029357-fb4c6b9c-fb11-47df-9db6-11fe8caed52d.png)
+
 Gérez vos Todos, écrivez des notes, et bien plus !
 Qubi est un site-tableau-de-bord disposant de widgets utile pour l'organisation de la vie de tous les jours
+
 
 ## Installation
 
