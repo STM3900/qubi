@@ -13,7 +13,7 @@
           @click="toggleTodoData(i)"
         />
         <label
-          v-if="!item.onEdit"
+          v-if="!todoListData[i].onEdit"
           :for="`checkbox${i}${uniqueIdTodos}`"
           :class="{ finished: todoListData[i].finished }"
           >{{ item.label }}</label
@@ -68,6 +68,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Todo",
   props: {
@@ -118,12 +120,14 @@ export default {
       if (this.addLabel) {
         this.$store.commit("addTodosStore", {
           id: this.uniqueIdTodos,
-          label: this.addLabel
+          label: this.addLabel,
+          onEdit: false
         });
         if (!this.isInStore) {
           this.todoListData.push({
             id: this.uniqueIdTodos,
-            label: this.addLabel
+            label: this.addLabel,
+            onEdit: false
           });
         }
 
@@ -137,11 +141,15 @@ export default {
           this.uniqueIdTodos
         ][index].label;
 
+        this.todoListData[index].onEdit = true;
+
         this.$store.commit("toggleTodoStoreEdit", {
           id: this.uniqueIdTodos,
           toggleValue: true,
           index: index
         });
+
+        console.log(this.$store.state.todosData[this.uniqueIdTodos][index]);
       }
     },
     confirmTodo(index) {
@@ -150,6 +158,8 @@ export default {
         toggleValue: false,
         index: index
       });
+
+      this.todoListData[index].onEdit = false;
 
       this.$store.commit("updateTotosText", {
         id: this.uniqueIdTodos,
